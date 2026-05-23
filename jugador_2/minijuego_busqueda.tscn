@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://ca443k5kw00oj"]
+
+[ext_resource type="Script" uid="uid://bituoxb1knvdm" path="res://jugador_2/minijuego_busqueda.gd" id="1_w7ayr"]
+
+[node name="minijuego_busqueda" type="Control" unique_id=217741962]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w7ayr")
+
+[node name="Label" type="Label" parent="." unique_id=1706639934]
+layout_mode = 0
+offset_left = 368.0
+offset_top = 23.0
+offset_right = 513.0
+offset_bottom = 50.0
+text = "Encuentra 3 pistas"
+
+[node name="TimerBar" type="ProgressBar" parent="." unique_id=1943558024]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 323.0
+offset_right = 805.0
+offset_bottom = 384.0
+max_value = 1.0
+
+[node name="Popup" type="Popup" parent="." unique_id=696940402]
+
+[node name="Label" type="Label" parent="Popup" unique_id=1898338932]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=889885872]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 85.0
+offset_right = 800.0
+offset_bottom = 310.0
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer" unique_id=2122245483]
+layout_mode = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
+columns = 3

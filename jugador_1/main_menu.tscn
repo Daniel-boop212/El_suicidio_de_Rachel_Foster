@@ -1,0 +1,432 @@
+[gd_scene format=3 uid="uid://b78fx510kw5c8"]
+
+[ext_resource type="Script" uid="uid://dhx5tmb8r8yt" path="res://jugador_1/main_menu.gd" id="1_qe12f"]
+[ext_resource type="Texture2D" uid="uid://b84dxhi3bqiw0" path="res://jugador_1/menu/fondo.png" id="2_7ex1f"]
+[ext_resource type="Texture2D" uid="uid://wgr4xxfdwngq" path="res://jugador_1/menu/fondo menu.png" id="2_dtmra"]
+[ext_resource type="FontFile" uid="uid://wo5pdorxjlko" path="res://jugador_1/menu/varsity_regular.ttf" id="3_8qtwp"]
+[ext_resource type="Texture2D" uid="uid://c7ko1d17rr2x6" path="res://jugador_1/menu/sombra.png" id="3_a0l4u"]
+[ext_resource type="Texture2D" uid="uid://bil558pp2ga28" path="res://jugador_1/menu/help_button.png" id="5_3oum5"]
+[ext_resource type="Texture2D" uid="uid://bpf8agd4yi4uy" path="res://jugador_1/menu/boton salir.png" id="7_0o4t1"]
+[ext_resource type="Texture2D" uid="uid://7ix7jaqvx24y" path="res://jugador_1/menu/settings_button.png" id="8_70sx0"]
+[ext_resource type="Texture2D" uid="uid://dfn5clqwwd0r4" path="res://jugador_1/menu/records_button.png" id="9_7ex1f"]
+[ext_resource type="Texture2D" uid="uid://bdb5qbi51x4p1" path="res://jugador_1/menu/exit_button.png" id="10_a0l4u"]
+[ext_resource type="Texture2D" uid="uid://b2i61mb3mdkxf" path="res://jugador_1/menu/multiplayer_button.png" id="11_3oum5"]
+[ext_resource type="Texture2D" uid="uid://c5p5bcfnbw0ap" path="res://jugador_1/menu/credits_button.png" id="12_70sx0"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7ex1f"]
+font = ExtResource("3_8qtwp")
+font_size = 60
+font_color = Color(1, 1, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_a0l4u"]
+font = ExtResource("3_8qtwp")
+font_size = 40
+
+[sub_resource type="LabelSettings" id="LabelSettings_j5v2v"]
+font = ExtResource("3_8qtwp")
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_dy7ct"]
+font = ExtResource("3_8qtwp")
+font_size = 75
+
+[sub_resource type="LabelSettings" id="LabelSettings_0o4t1"]
+font = ExtResource("3_8qtwp")
+font_size = 29
+
+[node name="MainMenu" type="Control" unique_id=1923876882]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qe12f")
+
+[node name="start_screen" type="Control" parent="." unique_id=399981367]
+visible = false
+anchors_preset = 0
+offset_top = -2.0
+offset_right = 1147.0
+offset_bottom = 638.0
+
+[node name="TextureRect" type="TextureRect" parent="start_screen" unique_id=1644886439]
+layout_mode = 0
+offset_right = 1161.0
+offset_bottom = 636.0
+texture = ExtResource("2_7ex1f")
+expand_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="start_screen" unique_id=1103458560]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 42.0
+offset_right = 1159.0
+offset_bottom = 536.0
+texture = ExtResource("3_a0l4u")
+
+[node name="TitleScreen" type="Label" parent="start_screen" unique_id=2135600222]
+layout_mode = 0
+offset_left = 131.0
+offset_top = 279.0
+offset_right = 1022.0
+offset_bottom = 352.0
+text = "EL SUICIDIO DE RACHEL FOSTER"
+label_settings = SubResource("LabelSettings_7ex1f")
+
+[node name="touchLabel" type="Label" parent="start_screen" unique_id=597848082]
+layout_mode = 0
+offset_left = 387.0
+offset_top = 367.0
+offset_right = 745.0
+offset_bottom = 416.0
+text = "haz clic para jugar"
+label_settings = SubResource("LabelSettings_a0l4u")
+
+[node name="MenuScreen" type="Control" parent="." unique_id=1815005354]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="MenuScreen" unique_id=1272420240]
+layout_mode = 0
+offset_left = -15.0
+offset_top = -3.0
+offset_right = 1150.0
+offset_bottom = 644.0
+texture = ExtResource("2_dtmra")
+expand_mode = 1
+
+[node name="helpButton" type="Control" parent="MenuScreen" unique_id=188048576]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="MenuScreen/helpButton" unique_id=1224979470]
+layout_mode = 0
+offset_left = 8.0
+offset_top = -2.0
+offset_right = 154.0
+offset_bottom = 91.0
+texture = ExtResource("5_3oum5")
+expand_mode = 1
+
+[node name="helpPanel" type="Control" parent="MenuScreen" unique_id=875982332]
+visible = false
+z_index = 1
+anchors_preset = 0
+offset_left = -16.0
+offset_right = 1150.0
+offset_bottom = 643.0
+
+[node name="DarkOverlay" type="ColorRect" parent="MenuScreen/helpPanel" unique_id=1567565954]
+layout_mode = 0
+offset_right = 1169.0
+offset_bottom = 645.0
+color = Color(0, 0, 0, 0.6431373)
+
+[node name="PanelBox" type="Panel" parent="MenuScreen/helpPanel" unique_id=1798884018]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 89.0
+offset_right = 1066.0
+offset_bottom = 576.0
+
+[node name="HelpText" type="Label" parent="MenuScreen/helpPanel/PanelBox" unique_id=130849497]
+layout_mode = 0
+offset_right = 965.0
+offset_bottom = 422.0
+text = "Usa el mouse para investigar pistas.
+Haz clic en objetos sospechosos.
+Sigue el rastro digital para resolver el caso.
+"
+label_settings = SubResource("LabelSettings_j5v2v")
+
+[node name="CloseButton" type="Control" parent="MenuScreen/helpPanel/PanelBox" unique_id=1983698222]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="MenuScreen/helpPanel/PanelBox/CloseButton" unique_id=1396076741]
+layout_mode = 0
+offset_left = 830.0
+offset_top = 437.0
+offset_right = 961.0
+offset_bottom = 482.0
+texture = ExtResource("7_0o4t1")
+expand_mode = 1
+
+[node name="settingButton" type="Control" parent="MenuScreen" unique_id=1256579571]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="MenuScreen/settingButton" unique_id=2111440477]
+layout_mode = 0
+offset_left = 856.0
+offset_top = 1.0
+offset_right = 998.0
+offset_bottom = 89.0
+texture = ExtResource("8_70sx0")
+expand_mode = 1
+
+[node name="SettingsPanel" type="Control" parent="MenuScreen" unique_id=884943731]
+visible = false
+z_index = 1
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DarkOverlay" type="ColorRect" parent="MenuScreen/SettingsPanel" unique_id=1260816267]
+layout_mode = 0
+offset_left = -12.0
+offset_right = 1157.0
+offset_bottom = 645.0
+color = Color(0, 0, 0, 0.6431373)
+
+[node name="PanelBox" type="Panel" parent="MenuScreen/SettingsPanel" unique_id=28626738]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 89.0
+offset_right = 1066.0
+offset_bottom = 576.0
+
+[node name="CloseSettingsButton" type="Control" parent="MenuScreen/SettingsPanel/PanelBox" unique_id=1804048809]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="MenuScreen/SettingsPanel/PanelBox/CloseSettingsButton" unique_id=1280545486]
+layout_mode = 0
+offset_left = 830.0
+offset_top = 437.0
+offset_right = 961.0
+offset_bottom = 482.0
+texture = ExtResource("7_0o4t1")
+expand_mode = 1
+
+[node name="title" type="Label" parent="MenuScreen/SettingsPanel/PanelBox" unique_id=50003195]
+layout_mode = 0
+offset_left = 337.0
+offset_top = 3.0
+offset_right = 660.0
+offset_bottom = 93.0
+text = "AJUSTES"
+label_settings = SubResource("LabelSettings_dy7ct")
+
+[node name="volumeLabel" type="Label" parent="MenuScreen/SettingsPanel/PanelBox" unique_id=1092372884]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 90.0
+offset_right = 137.0
+offset_bottom = 126.0
+text = "Volumen"
+label_settings = SubResource("LabelSettings_0o4t1")
+
+[node name="VolumeSlider" type="HSlider" parent="MenuScreen/SettingsPanel/PanelBox" unique_id=58178302]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 109.0
+offset_right = 951.0
+offset_bottom = 214.0
+
+[node name="FullscreenToggle" type="CheckBox" parent="MenuScreen/SettingsPanel/PanelBox" unique_id=436273488]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 182.0
+offset_right = 240.0
+offset_bottom = 234.0
+text = "PANTALLA COMPLETA"
+
+[node name="RecordsButton" type="Control" parent="MenuScreen" unique_id=129020338]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="MenuScreen/RecordsButton" unique_id=1808799830]
+layout_mode = 0
+offset_left = 1001.0
+offset_top = 1.0
+offset_right = 1146.0
+offset_bottom = 89.0
+texture = ExtResource("9_7ex1f")
+expand_mode = 1
+
+[node name="RecordsPanel" type="Control" parent="MenuScreen" unique_id=1346118906]
+visible = false
+anchors_preset = 0
+offset_left = 901.0
+offset_top = -1.0
+offset_right = 941.0
+offset_bottom = 39.0
+
+[node name="DarkOverlay" type="ColorRect" parent="MenuScreen/RecordsPanel" unique_id=612531729]
+layout_mode = 0
+offset_left = -913.0
+offset_top = 4.0
+offset_right = 256.0
+offset_bottom = 649.0
+color = Color(0, 0, 0, 0.6431373)
+
+[node name="PanelBox" type="Panel" parent="MenuScreen/RecordsPanel" unique_id=40619366]
+layout_mode = 0
+offset_left = -810.0
+offset_top = 84.0
+offset_right = 158.0
+offset_bottom = 571.0
+
+[node name="CloseRecordsButton" type="Control" parent="MenuScreen/RecordsPanel/PanelBox" unique_id=1590160346]
+anchors_preset = 0
+offset_left = -21.0
+offset_top = -23.0
+offset_right = 19.0
+offset_bottom = 17.0
+
+[node name="TextureRect" type="TextureRect" parent="MenuScreen/RecordsPanel/PanelBox/CloseRecordsButton" unique_id=1032409713]
+layout_mode = 0
+offset_left = 830.0
+offset_top = 437.0
+offset_right = 961.0
+offset_bottom = 482.0
+texture = ExtResource("7_0o4t1")
+expand_mode = 1
+
+[node name="title" type="Label" parent="MenuScreen/RecordsPanel/PanelBox" unique_id=1634891780]
+layout_mode = 0
+offset_left = 337.0
+offset_top = 3.0
+offset_right = 660.0
+offset_bottom = 93.0
+text = "RECORDS"
+label_settings = SubResource("LabelSettings_dy7ct")
+
+[node name="RecordsList" type="VBoxContainer" parent="MenuScreen/RecordsPanel/PanelBox" unique_id=943113218]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 92.0
+offset_right = 940.0
+offset_bottom = 391.0
+
+[node name="exitButton" type="Control" parent="MenuScreen" unique_id=1791276052]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="MenuScreen/exitButton" unique_id=1995329996]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 458.0
+offset_right = 152.0
+offset_bottom = 549.0
+texture = ExtResource("10_a0l4u")
+expand_mode = 1
+
+[node name="multiplayerButton" type="Control" parent="MenuScreen" unique_id=1087518248]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="MenuScreen/multiplayerButton" unique_id=1565722551]
+layout_mode = 0
+offset_left = 954.0
+offset_top = 505.0
+offset_right = 1153.0
+offset_bottom = 644.0
+texture = ExtResource("11_3oum5")
+expand_mode = 1
+
+[node name="creditsButton" type="Control" parent="MenuScreen" unique_id=1051400427]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="MenuScreen/creditsButton" unique_id=1969900366]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 554.0
+offset_right = 150.0
+offset_bottom = 638.0
+texture = ExtResource("12_70sx0")
+expand_mode = 1
+
+[node name="MultiplayerPanel" type="Control" parent="MenuScreen" unique_id=1424624549]
+visible = false
+z_index = 1
+anchors_preset = 0
+offset_left = -16.0
+offset_right = 1150.0
+offset_bottom = 643.0
+
+[node name="DarkOverlay" type="ColorRect" parent="MenuScreen/MultiplayerPanel" unique_id=2030809561]
+layout_mode = 0
+offset_right = 1169.0
+offset_bottom = 645.0
+color = Color(0, 0, 0, 0.6431373)
+
+[node name="PanelBox" type="Panel" parent="MenuScreen/MultiplayerPanel" unique_id=1633013701]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 89.0
+offset_right = 1066.0
+offset_bottom = 576.0
+
+[node name="selectLabel" type="Label" parent="MenuScreen/MultiplayerPanel/PanelBox" unique_id=801705537]
+layout_mode = 0
+offset_left = 246.0
+offset_top = 8.0
+offset_right = 658.0
+offset_bottom = 71.0
+text = "Selecciona que personaje quieres ser:
+"
+label_settings = SubResource("LabelSettings_j5v2v")
+
+[node name="CheckBoxDetective" type="CheckBox" parent="MenuScreen/MultiplayerPanel/PanelBox" unique_id=142507877]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.068
+anchor_bottom = 0.12900001
+offset_left = 579.0
+offset_top = 103.0
+offset_right = 623.176
+offset_bottom = 103.176994
+text = "DETECTIVE"
+flat = true
+
+[node name="CheckBoxPolicia" type="CheckBox" parent="MenuScreen/MultiplayerPanel/PanelBox" unique_id=988877994]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.068
+anchor_bottom = 0.12900001
+offset_left = 215.0
+offset_top = 104.0
+offset_right = 239.176
+offset_bottom = 104.176994
+text = "POLICIA"
+flat = true
+
+[node name="CloseButton" type="Control" parent="MenuScreen/MultiplayerPanel/PanelBox" unique_id=351163154]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="MenuScreen/MultiplayerPanel/PanelBox/CloseButton" unique_id=202220195]
+layout_mode = 0
+offset_left = 830.0
+offset_top = 437.0
+offset_right = 961.0
+offset_bottom = 482.0
+texture = ExtResource("7_0o4t1")
+expand_mode = 1
+
+[connection signal="gui_input" from="start_screen" to="." method="_on_start_screen_gui_input"]
+[connection signal="gui_input" from="MenuScreen/helpButton" to="." method="_on_help_button_gui_input"]
+[connection signal="gui_input" from="MenuScreen/helpPanel/PanelBox/CloseButton" to="." method="_on_close_button_gui_input"]
+[connection signal="gui_input" from="MenuScreen/settingButton" to="." method="_on_setting_button_gui_input"]
+[connection signal="gui_input" from="MenuScreen/SettingsPanel/PanelBox/CloseSettingsButton" to="." method="_on_close_settings_button_gui_input"]
+[connection signal="value_changed" from="MenuScreen/SettingsPanel/PanelBox/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
+[connection signal="toggled" from="MenuScreen/SettingsPanel/PanelBox/FullscreenToggle" to="." method="_on_fullscreen_toggle_toggled"]
+[connection signal="gui_input" from="MenuScreen/RecordsButton" to="." method="_on_records_button_gui_input"]
+[connection signal="gui_input" from="MenuScreen/RecordsPanel/PanelBox/CloseRecordsButton" to="." method="_on_close_records_button_gui_input"]
+[connection signal="gui_input" from="MenuScreen/exitButton/TextureRect" to="." method="_on_texture_rect_gui_input"]
+[connection signal="gui_input" from="MenuScreen/multiplayerButton" to="." method="_on_multiplayer_button_gui_input"]
+[connection signal="gui_input" from="MenuScreen/MultiplayerPanel/PanelBox/CloseButton" to="." method="_on_close_Multiplayer_button_gui_input"]

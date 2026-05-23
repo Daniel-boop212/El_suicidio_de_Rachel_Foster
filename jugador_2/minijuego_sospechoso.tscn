@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://birt83jt7dawl"]
+
+[ext_resource type="Script" uid="uid://cglwv74ae8fok" path="res://jugador_2/minijuego_sospechoso.gd" id="1_kpmcb"]
+
+[node name="minijuego_sospechoso" type="Control" unique_id=1867672086]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kpmcb")
+
+[node name="Label" type="Label" parent="." unique_id=2006603263]
+layout_mode = 0
+offset_left = 376.0
+offset_top = 46.0
+offset_right = 578.0
+offset_bottom = 69.0
+text = "detectar mensajes tóxicos"
+
+[node name="Button" type="Button" parent="." unique_id=376866638]
+layout_mode = 0
+offset_left = 394.0
+offset_top = 291.0
+offset_right = 536.0
+offset_bottom = 344.0
+text = "Comprobar"
+
+[node name="TimerBar" type="ProgressBar" parent="." unique_id=225795502]
+layout_mode = 0
+offset_left = 102.0
+offset_top = 357.0
+offset_right = 816.0
+offset_bottom = 418.0
+max_value = 1.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1464968242]
+layout_mode = 0
+offset_left = 97.0
+offset_top = 87.0
+offset_right = 816.0
+offset_bottom = 276.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=550325803]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

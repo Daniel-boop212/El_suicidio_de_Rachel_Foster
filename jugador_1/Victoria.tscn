@@ -1,0 +1,165 @@
+[gd_scene format=3 uid="uid://dayv6fljd1aqc"]
+
+[ext_resource type="Script" uid="uid://vbnxno4paxaw" path="res://jugador_1/victoria.gd" id="1_gvs5y"]
+[ext_resource type="Texture2D" uid="uid://bg82kv0iopdmh" path="res://jugador_1/victoria/victoria.png" id="1_qpjob"]
+[ext_resource type="FontFile" uid="uid://cf1rfvbguwauf" path="res://jugador_1/menu/varsity_regular.ttf" id="2_xtg27"]
+[ext_resource type="Script" uid="uid://cggc8fdqrgs42" path="res://jugador_1/lobby_button.gd" id="3_pad2k"]
+[ext_resource type="Texture2D" uid="uid://bj0japg0bckkq" path="res://jugador_1/victoria/boton inicio.png" id="4_bl21q"]
+[ext_resource type="Texture2D" uid="uid://covpxftkeqna6" path="res://jugador_1/victoria/boton guardar record.png" id="6_67kmo"]
+[ext_resource type="Texture2D" uid="uid://bpf8agd4yi4uy" path="res://jugador_1/menu/boton salir.png" id="7_i5dje"]
+[ext_resource type="Texture2D" uid="uid://dpenhhntcc5me" path="res://jugador_1/victoria/guardar.png" id="8_f8ngn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_gvs5y"]
+font = ExtResource("2_xtg27")
+font_size = 80
+
+[sub_resource type="LabelSettings" id="LabelSettings_qlbo7"]
+font = ExtResource("2_xtg27")
+font_size = 50
+
+[node name="Victoria" type="Control" unique_id=1489746450]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1152.0
+offset_bottom = -648.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gvs5y")
+metadata/_edit_vertical_guides_ = [-404.0]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=919337935]
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 648.0
+texture = ExtResource("1_qpjob")
+expand_mode = 1
+
+[node name="Titulo" type="Label" parent="." unique_id=272341680]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 10.0
+offset_right = 790.0
+offset_bottom = 261.0
+text = "CORRECTO:
+CASO RESUELTO"
+label_settings = SubResource("LabelSettings_gvs5y")
+
+[node name="LobbyButton" type="Control" parent="." unique_id=431586221]
+anchors_preset = 0
+offset_left = 1004.0
+offset_top = 496.0
+offset_right = 1133.0
+offset_bottom = 632.0
+script = ExtResource("3_pad2k")
+
+[node name="Sprite2D" type="TextureRect" parent="LobbyButton" unique_id=419584606]
+layout_mode = 0
+offset_left = -8.999977
+offset_top = 9.0
+offset_right = 189.00003
+offset_bottom = 185.0
+scale = Vector2(0.72727275, 0.7386364)
+texture = ExtResource("4_bl21q")
+
+[node name="SaveButton" type="Control" parent="." unique_id=1805403467]
+anchors_preset = 0
+offset_left = 7.0
+offset_top = 10.0
+offset_right = 145.0
+offset_bottom = 133.0
+
+[node name="Sprite2D" type="TextureRect" parent="SaveButton" unique_id=1198221548]
+layout_mode = 0
+offset_left = 827.0
+offset_top = 499.0
+offset_right = 970.0
+offset_bottom = 628.0
+texture = ExtResource("6_67kmo")
+expand_mode = 1
+
+[node name="SavePanel" type="Control" parent="." unique_id=1592164194]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DarkOverlay" type="ColorRect" parent="SavePanel" unique_id=1815243265]
+layout_mode = 0
+offset_right = 1169.0
+offset_bottom = 645.0
+color = Color(0, 0, 0, 0.6431373)
+
+[node name="PanelBox" type="Panel" parent="SavePanel" unique_id=1297113552]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 89.0
+offset_right = 1066.0
+offset_bottom = 576.0
+
+[node name="SaveText" type="Label" parent="SavePanel/PanelBox" unique_id=1758318770]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.22700001
+anchor_bottom = 0.064
+offset_left = 217.0
+offset_top = 22.0
+offset_right = 493.26398
+offset_bottom = 55.832
+text = "GUARDA TU PARTIDA"
+label_settings = SubResource("LabelSettings_qlbo7")
+
+[node name="CloseButton" type="Control" parent="SavePanel/PanelBox" unique_id=1938662117]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="SavePanel/PanelBox/CloseButton" unique_id=1874843424]
+layout_mode = 0
+offset_left = 830.0
+offset_top = 437.0
+offset_right = 961.0
+offset_bottom = 482.0
+texture = ExtResource("7_i5dje")
+expand_mode = 1
+
+[node name="NameLineEdit" type="LineEdit" parent="SavePanel/PanelBox" unique_id=1899483044]
+layout_mode = 0
+offset_left = 83.0
+offset_top = 227.0
+offset_right = 898.0
+offset_bottom = 300.0
+placeholder_text = "Introduce tu nombre..."
+
+[node name="Nombre" type="Label" parent="SavePanel/PanelBox" unique_id=1216851857]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.22700001
+anchor_bottom = 0.064
+offset_left = 81.0
+offset_top = 158.0
+offset_right = 357.26398
+offset_bottom = 191.832
+text = "NOMBRE:"
+label_settings = SubResource("LabelSettings_qlbo7")
+
+[node name="SavedButton" type="Control" parent="SavePanel/PanelBox" unique_id=891080961]
+anchors_preset = 0
+offset_left = 232.0
+offset_top = 317.00003
+offset_right = 560.0
+offset_bottom = 426.00003
+scale = Vector2(1.76, 0.84)
+
+[node name="TextureRect" type="TextureRect" parent="SavePanel/PanelBox/SavedButton" unique_id=894766117]
+layout_mode = 0
+offset_left = 1.0
+offset_top = -10.0
+offset_right = 326.0
+offset_bottom = 108.0
+texture = ExtResource("8_f8ngn")
+expand_mode = 1
+
+[connection signal="gui_input" from="SaveButton" to="." method="_on_save_button_gui_input"]
+[connection signal="gui_input" from="SavePanel/PanelBox/CloseButton" to="." method="_on_close_button_gui_input"]
+[connection signal="gui_input" from="SavePanel/PanelBox/SavedButton" to="." method="_on_saved_button_gui_input"]
