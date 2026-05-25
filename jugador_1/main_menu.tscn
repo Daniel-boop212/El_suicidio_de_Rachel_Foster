@@ -1,17 +1,18 @@
 [gd_scene format=3 uid="uid://b78fx510kw5c8"]
 
 [ext_resource type="Script" uid="uid://dhx5tmb8r8yt" path="res://jugador_1/main_menu.gd" id="1_qe12f"]
-[ext_resource type="Texture2D" uid="uid://b84dxhi3bqiw0" path="res://jugador_1/menu/fondo.png" id="2_7ex1f"]
+[ext_resource type="Texture2D" uid="uid://cm4cjjarsn7nt" path="res://jugador_1/menu/fondo.png" id="2_7ex1f"]
 [ext_resource type="Texture2D" uid="uid://wgr4xxfdwngq" path="res://jugador_1/menu/fondo menu.png" id="2_dtmra"]
-[ext_resource type="FontFile" uid="uid://wo5pdorxjlko" path="res://jugador_1/menu/varsity_regular.ttf" id="3_8qtwp"]
+[ext_resource type="FontFile" uid="uid://b0qxytofu2kgf" path="res://jugador_1/menu/varsity_regular.ttf" id="3_8qtwp"]
 [ext_resource type="Texture2D" uid="uid://c7ko1d17rr2x6" path="res://jugador_1/menu/sombra.png" id="3_a0l4u"]
 [ext_resource type="Texture2D" uid="uid://bil558pp2ga28" path="res://jugador_1/menu/help_button.png" id="5_3oum5"]
-[ext_resource type="Texture2D" uid="uid://bpf8agd4yi4uy" path="res://jugador_1/menu/boton salir.png" id="7_0o4t1"]
+[ext_resource type="Texture2D" uid="uid://dktitx4plwu14" path="res://jugador_1/menu/boton salir.png" id="7_0o4t1"]
 [ext_resource type="Texture2D" uid="uid://7ix7jaqvx24y" path="res://jugador_1/menu/settings_button.png" id="8_70sx0"]
 [ext_resource type="Texture2D" uid="uid://dfn5clqwwd0r4" path="res://jugador_1/menu/records_button.png" id="9_7ex1f"]
 [ext_resource type="Texture2D" uid="uid://bdb5qbi51x4p1" path="res://jugador_1/menu/exit_button.png" id="10_a0l4u"]
 [ext_resource type="Texture2D" uid="uid://b2i61mb3mdkxf" path="res://jugador_1/menu/multiplayer_button.png" id="11_3oum5"]
 [ext_resource type="Texture2D" uid="uid://c5p5bcfnbw0ap" path="res://jugador_1/menu/credits_button.png" id="12_70sx0"]
+[ext_resource type="AudioStream" uid="uid://d1mgmok45vktm" path="res://music/audio fondo.mp3" id="13_7ex1f"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7ex1f"]
 font = ExtResource("3_8qtwp")
@@ -417,6 +418,11 @@ offset_right = 961.0
 offset_bottom = 482.0
 texture = ExtResource("7_0o4t1")
 expand_mode = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=936705866]
+stream = ExtResource("13_7ex1f")
+pitch_scale = 1.02
+autoplay = true
 
 [connection signal="gui_input" from="start_screen" to="." method="_on_start_screen_gui_input"]
 [connection signal="gui_input" from="MenuScreen/helpButton" to="." method="_on_help_button_gui_input"]
