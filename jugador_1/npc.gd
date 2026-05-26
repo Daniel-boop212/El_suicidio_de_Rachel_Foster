@@ -4,7 +4,7 @@ class_name NpcConversador
 @export var dialogo: Node
 @export var nombre_de_la_pista: String = "Juan mando un mensaje a las 11PM"
 @export var tarea_jugador_2: String = "toxicidad"
-@export var texto_dialogop: String = "Hola detective, encontré algo..."
+@export var texto_dialogop: String = "Hola detective, encontre algo..."
 @export var texto_dialogo_antes: String = "Detective he perdido mi celular si lo encuentras podrias descubrir algo"
 
 @onready var area: Area2D = $Area2D
@@ -23,10 +23,12 @@ func _ready() -> void:
 	_crear_indicador_interaccion()
 	_conectar_dialogo()
 	_configurar_cuadro_dialogo()
+	if not Global.idioma_actualizado.is_connected(_actualizar_textos):
+		Global.idioma_actualizado.connect(_actualizar_textos)
 
 func _crear_indicador_interaccion() -> void:
 	indicador_interaccion = Label.new()
-	indicador_interaccion.text = "Pulsa E para hablar"
+	indicador_interaccion.text = Global.t("press_talk")
 	indicador_interaccion.position = Vector2(85.0, -305.0)
 	indicador_interaccion.visible = false
 	indicador_interaccion.z_index = 10
@@ -94,8 +96,8 @@ func abrir_dialogo_interactivo() -> void:
 		return
 
 	esperando_opcion = true
-	var opciones: Array[String] = [OPCION_PREGUNTAR, OPCION_DESPEDIRSE]
-	dialogo.call("mostrar_dialogo", "¿Qué quieres preguntar?", opciones)
+	var opciones: Array[String] = [Global.t("ask_question"), Global.t("goodbye")]
+	dialogo.call("mostrar_dialogo", Global.t("what_ask"), opciones)
 
 func _on_dialogo_opcion_elegida(_indice: int, texto_opcion: String) -> void:
 	if not esperando_opcion:
@@ -103,13 +105,13 @@ func _on_dialogo_opcion_elegida(_indice: int, texto_opcion: String) -> void:
 
 	esperando_opcion = false
 
-	if texto_opcion == OPCION_PREGUNTAR:
+	if texto_opcion == Global.t("ask_question") or texto_opcion == OPCION_PREGUNTAR:
 		_responder_con_pista()
 		return
 
-	if texto_opcion == OPCION_DESPEDIRSE:
+	if texto_opcion == Global.t("goodbye") or texto_opcion == OPCION_DESPEDIRSE:
 		if dialogo != null and dialogo.has_method("mostrar_dialogo"):
-			dialogo.call("mostrar_dialogo", "Hablamos luego, detective.")
+			dialogo.call("mostrar_dialogo", Global.t("talk_later"))
 
 func _responder_con_pista() -> void:
 	if dialogo == null or not dialogo.has_method("mostrar_dialogo"):
@@ -120,10 +122,10 @@ func _responder_con_pista() -> void:
 		Global.solicitar_tarea_jugador_2(tarea_jugador_2)
 		Global.tiene_celular = false
 		Global.paso_actual = 1
-		dialogo.call("mostrar_dialogo", texto_dialogop)
+		dialogo.call("mostrar_dialogo", Global.traducir_texto_directo(texto_dialogop))
 	else:
 		Global.paso_actual = 1
-		dialogo.call("mostrar_dialogo", texto_dialogo_antes)
+		dialogo.call("mostrar_dialogo", Global.traducir_texto_directo(texto_dialogo_antes))
 
 func _dialogo_esta_abierto() -> bool:
 	if dialogo == null:
@@ -141,3 +143,7 @@ func _actualizar_indicador() -> void:
 		return
 
 	indicador_interaccion.visible = player_near and not _dialogo_esta_abierto()
+
+func _actualizar_textos() -> void:
+	if indicador_interaccion != null:
+		indicador_interaccion.text = Global.t("press_talk")

@@ -2,34 +2,34 @@ extends Control
 
 const MINIGAMES = {
 	"moderacion": {
-		"title": "Moderar chat en vivo",
+		"title_key": "task.moderacion.title",
 		"route": "res://jugador_2/minijuego_presiona.tscn",
-		"brief": "Elimina mensajes agresivos antes de que escalen."
+		"brief_key": "task.moderacion.brief"
 	},
 	"toxicidad": {
-		"title": "Clasificar mensajes",
+		"title_key": "task.toxicidad.title",
 		"route": "res://jugador_2/minijuego_detectar.tscn",
-		"brief": "Marca que mensajes contienen acoso."
+		"brief_key": "task.toxicidad.brief"
 	},
 	"conversacion": {
-		"title": "Reconstruir conversacion",
+		"title_key": "task.conversacion.title",
 		"route": "res://jugador_2/minijuego_chat.tscn",
-		"brief": "Ordena el hilo para entender como empezo el ataque."
+		"brief_key": "task.conversacion.brief"
 	},
 	"busqueda": {
-		"title": "Buscar evidencias",
+		"title_key": "task.busqueda.title",
 		"route": "res://jugador_2/minijuego_busqueda.tscn",
-		"brief": "Revisa archivos y encuentra las pruebas utiles."
+		"brief_key": "task.busqueda.brief"
 	},
 	"perfil": {
-		"title": "Detectar cuenta falsa",
+		"title_key": "task.perfil.title",
 		"route": "res://jugador_2/minijuego_sospechoso.tscn",
-		"brief": "Analiza perfiles y senala el sospechoso."
+		"brief_key": "task.perfil.brief"
 	},
 	"testimonio": {
-		"title": "Descubrir contradiccion",
+		"title_key": "task.testimonio.title",
 		"route": "res://jugador_2/minijuego_descubrir.tscn",
-		"brief": "Compara testimonios para encontrar quien miente."
+		"brief_key": "task.testimonio.brief"
 	}
 }
 
@@ -47,27 +47,34 @@ var task_brief: Label = null
 var reward_label: Label = null
 var log_list: VBoxContainer = null
 var action_list: VBoxContainer = null
+var camera_texture: TextureRect = null
+var camera_status: Label = null
+var ultima_captura: ImageTexture = null
 
 func _ready() -> void:
 	_build_interface()
 	_show_waiting_desktop()
-	_add_log("Sistema listo. Esperando accion del jugador 1.")
+	_add_log(Global.t("system_ready"))
 	if not Global.tarea_jugador_2_solicitada.is_connected(trigger_task):
 		Global.tarea_jugador_2_solicitada.connect(trigger_task)
+	if not Global.captura_jugador_1_actualizada.is_connected(_on_captura_jugador_1_actualizada):
+		Global.captura_jugador_1_actualizada.connect(_on_captura_jugador_1_actualizada)
+	if not Global.idioma_actualizado.is_connected(_on_idioma_actualizado):
+		Global.idioma_actualizado.connect(_on_idioma_actualizado)
 
 
 func trigger_task(task_id: String) -> void:
 	if not MINIGAMES.has(task_id):
-		push_warning("Tarea desconocida para Jugador 2: " + task_id)
+		push_warning(Global.t("unknown_task") + task_id)
 		return
 
 	var task: Dictionary = MINIGAMES[task_id]
 	tarea_actual = task_id
-	task_title.text = task["title"]
-	task_brief.text = task["brief"]
-	status_label.text = "TAREA RECIBIDA"
-	_add_log("Nueva asistencia: " + task["title"])
-	mostrar_minijuego(task["route"])
+	task_title.text = Global.t(str(task["title_key"]))
+	task_brief.text = Global.t(str(task["brief_key"]))
+	status_label.text = Global.t("task_received")
+	_add_log(Global.t("new_support") + Global.t(str(task["title_key"])))
+	mostrar_minijuego(str(task["route"]))
 
 
 func mostrar_minijuego(ruta: String) -> void:
@@ -77,10 +84,10 @@ func mostrar_minijuego(ruta: String) -> void:
 	_clear_screen()
 	_set_screen_padding(0)
 
-	var escena := load(ruta)
+	var escena: Resource = load(ruta)
 	if escena == null:
-		status_label.text = "ERROR DE CARGA"
-		_add_log("No se pudo cargar: " + ruta)
+		status_label.text = Global.t("load_error")
+		_add_log(Global.t("load_failed") + ruta)
 		_show_waiting_desktop()
 		return
 
@@ -89,6 +96,7 @@ func mostrar_minijuego(ruta: String) -> void:
 	minijuego_actual.set_anchors_preset(Control.PRESET_FULL_RECT)
 	minijuego_actual.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	minijuego_actual.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	Global.traducir_arbol(minijuego_actual)
 
 	if minijuego_actual.has_signal("minijuego_terminado"):
 		minijuego_actual.minijuego_terminado.connect(_on_minijuego_terminado)
@@ -98,18 +106,18 @@ func _on_minijuego_terminado(resultado: bool, recompensa: int) -> void:
 	if resultado:
 		monedas += recompensa
 		misiones_resueltas += 1
-		status_label.text = "CASO ACTUALIZADO"
-		_add_log("Apoyo completado. +" + str(recompensa) + " monedas.")
+		status_label.text = Global.t("case_updated")
+		_add_log(Global.t("support_done") % str(recompensa))
 	else:
 		misiones_fallidas += 1
-		status_label.text = "APOYO FALLIDO"
-		_add_log("La tarea fallo. El caso no avanza.")
+		status_label.text = Global.t("support_failed")
+		_add_log(Global.t("task_failed"))
 
 	Global.completar_tarea_jugador_2(tarea_actual, resultado, recompensa)
-	reward_label.text = "Monedas: " + str(monedas) + " | Exitos: " + str(misiones_resueltas) + " | Fallos: " + str(misiones_fallidas)
+	_update_rewards()
 	minijuego_actual = null
-	task_title.text = "Esperando solicitud"
-	task_brief.text = "Cuando el jugador 1 interactue con una pista, aqui aparecera la tarea de apoyo."
+	task_title.text = Global.t("waiting_request")
+	task_brief.text = Global.t("waiting_brief")
 
 	await get_tree().create_timer(0.8).timeout
 	_show_waiting_desktop()
@@ -153,17 +161,17 @@ func _create_top_bar() -> Control:
 	bar.add_child(title_box)
 
 	var title := Label.new()
-	title.text = "CONSOLA DE ASISTENCIA - JUGADOR 2"
+	title.text = Global.t("assistant_title")
 	title.add_theme_font_size_override("font_size", 23)
 	title.add_theme_color_override("font_color", Color(0.92, 0.98, 1.0))
 	title_box.add_child(title)
 
 	var subtitle := Label.new()
-	subtitle.text = "Terminal de apoyo para investigar ciberacoso"
+	subtitle.text = Global.t("assistant_subtitle")
 	subtitle.add_theme_color_override("font_color", Color(0.55, 0.68, 0.72))
 	title_box.add_child(subtitle)
 
-	status_label = _pill_label("EN ESPERA", Color(0.12, 0.28, 0.24), Color(0.45, 0.95, 0.74))
+	status_label = _pill_label(Global.t("standby"), Color(0.12, 0.28, 0.24), Color(0.45, 0.95, 0.74))
 	status_label.name = "StatusLabel"
 	status_label.unique_name_in_owner = true
 	bar.add_child(status_label)
@@ -199,7 +207,7 @@ func _create_case_strip() -> Control:
 	margin.add_child(box)
 
 	var case_text := Label.new()
-	case_text.text = "CASO ACTIVO\nIncidente: hostigamiento digital\nEstado: investigacion inicial"
+	case_text.text = Global.t("active_case").to_upper() + "\n" + Global.t("case_text")
 	case_text.custom_minimum_size = Vector2(260, 0)
 	case_text.add_theme_color_override("font_color", Color(0.76, 0.88, 0.9))
 	box.add_child(case_text)
@@ -212,7 +220,7 @@ func _create_case_strip() -> Control:
 	task_title = Label.new()
 	task_title.name = "TaskTitle"
 	task_title.unique_name_in_owner = true
-	task_title.text = "Esperando solicitud"
+	task_title.text = Global.t("waiting_request")
 	task_title.add_theme_font_size_override("font_size", 18)
 	task_title.add_theme_color_override("font_color", Color(1.0, 0.92, 0.62))
 	task_box.add_child(task_title)
@@ -220,7 +228,7 @@ func _create_case_strip() -> Control:
 	task_brief = Label.new()
 	task_brief.name = "TaskBrief"
 	task_brief.unique_name_in_owner = true
-	task_brief.text = "Cuando el jugador 1 interactue con una pista, aqui aparecera la tarea de apoyo."
+	task_brief.text = Global.t("waiting_brief")
 	task_brief.autowrap_mode = TextServer.AUTOWRAP_WORD
 	task_brief.add_theme_color_override("font_color", Color(0.68, 0.78, 0.82))
 	task_box.add_child(task_brief)
@@ -240,10 +248,10 @@ func _create_left_panel() -> Control:
 	box.add_theme_constant_override("separation", 14)
 	margin.add_child(box)
 
-	box.add_child(_section_title("Caso activo"))
+	box.add_child(_section_title(Global.t("active_case")))
 
 	var case_text := Label.new()
-	case_text.text = "Incidente: hostigamiento digital\nEstado: investigacion inicial\nRol: asistencia remota"
+	case_text.text = Global.t("case_text")
 	case_text.autowrap_mode = TextServer.AUTOWRAP_WORD
 	case_text.add_theme_color_override("font_color", Color(0.78, 0.88, 0.9))
 	box.add_child(case_text)
@@ -251,7 +259,7 @@ func _create_left_panel() -> Control:
 	task_title = Label.new()
 	task_title.name = "TaskTitle"
 	task_title.unique_name_in_owner = true
-	task_title.text = "Esperando solicitud"
+	task_title.text = Global.t("waiting_request")
 	task_title.add_theme_font_size_override("font_size", 18)
 	task_title.add_theme_color_override("font_color", Color(1.0, 0.92, 0.62))
 	box.add_child(task_title)
@@ -259,13 +267,13 @@ func _create_left_panel() -> Control:
 	task_brief = Label.new()
 	task_brief.name = "TaskBrief"
 	task_brief.unique_name_in_owner = true
-	task_brief.text = "Cuando el jugador 1 interactue con una pista, aqui aparecera la tarea de apoyo."
+	task_brief.text = Global.t("waiting_brief")
 	task_brief.autowrap_mode = TextServer.AUTOWRAP_WORD
 	task_brief.add_theme_color_override("font_color", Color(0.68, 0.78, 0.82))
 	box.add_child(task_brief)
 
 	box.add_child(_separator())
-	box.add_child(_section_title("Registro"))
+	box.add_child(_section_title("Log"))
 
 	log_list = VBoxContainer.new()
 	log_list.name = "LogList"
@@ -332,10 +340,10 @@ func _create_right_panel() -> Control:
 	box.add_theme_constant_override("separation", 10)
 	scroll.add_child(box)
 
-	box.add_child(_section_title("Caso activo"))
+	box.add_child(_section_title(Global.t("active_case")))
 
 	var case_text := Label.new()
-	case_text.text = "Incidente: hostigamiento digital\nEstado: investigacion inicial"
+	case_text.text = Global.t("case_text")
 	case_text.autowrap_mode = TextServer.AUTOWRAP_WORD
 	case_text.add_theme_color_override("font_color", Color(0.76, 0.88, 0.9))
 	box.add_child(case_text)
@@ -343,7 +351,7 @@ func _create_right_panel() -> Control:
 	task_title = Label.new()
 	task_title.name = "TaskTitle"
 	task_title.unique_name_in_owner = true
-	task_title.text = "Esperando solicitud"
+	task_title.text = Global.t("waiting_request")
 	task_title.add_theme_font_size_override("font_size", 17)
 	task_title.add_theme_color_override("font_color", Color(1.0, 0.92, 0.62))
 	box.add_child(task_title)
@@ -351,16 +359,16 @@ func _create_right_panel() -> Control:
 	task_brief = Label.new()
 	task_brief.name = "TaskBrief"
 	task_brief.unique_name_in_owner = true
-	task_brief.text = "Cuando el jugador 1 interactue con una pista, aqui aparecera la tarea de apoyo."
+	task_brief.text = Global.t("waiting_brief")
 	task_brief.autowrap_mode = TextServer.AUTOWRAP_WORD
 	task_brief.add_theme_color_override("font_color", Color(0.68, 0.78, 0.82))
 	box.add_child(task_brief)
 
 	box.add_child(_separator())
-	box.add_child(_section_title("Simulador de eventos"))
+	box.add_child(_section_title(Global.t("event_simulator")))
 
 	var note := Label.new()
-	note.text = "Pruebas temporales. Luego se reemplazan por eventos del jugador 1."
+	note.text = Global.t("event_note")
 	note.autowrap_mode = TextServer.AUTOWRAP_WORD
 	note.add_theme_color_override("font_color", Color(0.65, 0.75, 0.78))
 	box.add_child(note)
@@ -374,9 +382,9 @@ func _create_right_panel() -> Control:
 	for id in MINIGAMES.keys():
 		var task: Dictionary = MINIGAMES[id]
 		var button := Button.new()
-		button.text = task["title"]
+		button.text = Global.t(str(task["title_key"]))
 		button.custom_minimum_size = Vector2(0, 34)
-		button.tooltip_text = task["brief"]
+		button.tooltip_text = Global.t(str(task["brief_key"]))
 		button.pressed.connect(trigger_task.bind(id))
 		action_list.add_child(button)
 
@@ -385,7 +393,7 @@ func _create_right_panel() -> Control:
 	reward_label = Label.new()
 	reward_label.name = "RewardLabel"
 	reward_label.unique_name_in_owner = true
-	reward_label.text = "Monedas: 0 | Exitos: 0 | Fallos: 0"
+	_update_rewards()
 	reward_label.autowrap_mode = TextServer.AUTOWRAP_WORD
 	reward_label.add_theme_color_override("font_color", Color(0.92, 0.88, 0.62))
 	box.add_child(reward_label)
@@ -398,7 +406,7 @@ func _create_bottom_bar() -> Control:
 	bar.add_theme_constant_override("separation", 10)
 
 	var text := Label.new()
-	text.text = "Conexion local: modo prototipo | Fuente de video: simulada | Integracion futura: trigger_task(id)"
+	text.text = Global.t("bottom_status")
 	text.add_theme_color_override("font_color", Color(0.45, 0.56, 0.6))
 	text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	bar.add_child(text)
@@ -414,7 +422,7 @@ func _create_bottom_bar() -> Control:
 func _show_waiting_desktop() -> void:
 	_clear_screen()
 	_set_screen_padding(16)
-	status_label.text = "EN ESPERA"
+	status_label.text = Global.t("standby")
 
 	var desktop := VBoxContainer.new()
 	desktop.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -426,11 +434,11 @@ func _show_waiting_desktop() -> void:
 	header.add_theme_constant_override("separation", 10)
 	desktop.add_child(header)
 
-	var live := _pill_label("VISTA SIMULADA JUGADOR 1", Color(0.12, 0.18, 0.2), Color(0.58, 0.86, 0.92))
+	var live := _pill_label(Global.t("player1_view"), Color(0.12, 0.18, 0.2), Color(0.58, 0.86, 0.92))
 	header.add_child(live)
 
 	var hint := Label.new()
-	hint.text = "Aqui ira el feed real cuando exista la conexion entre PCs."
+	hint.text = Global.t("feed_waiting")
 	hint.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	hint.add_theme_color_override("font_color", Color(0.56, 0.68, 0.7))
 	header.add_child(hint)
@@ -449,23 +457,25 @@ func _show_waiting_desktop() -> void:
 	feed_margin.add_child(feed_box)
 
 	var scene_title := Label.new()
-	scene_title.text = "Camara de investigacion"
+	scene_title.text = Global.t("camera_title")
 	scene_title.add_theme_font_size_override("font_size", 22)
 	scene_title.add_theme_color_override("font_color", Color(0.88, 0.98, 1.0))
 	feed_box.add_child(scene_title)
 
-	var fake_view := GridContainer.new()
-	fake_view.columns = 2
-	fake_view.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	fake_view.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	fake_view.add_theme_constant_override("h_separation", 12)
-	fake_view.add_theme_constant_override("v_separation", 12)
-	feed_box.add_child(fake_view)
+	camera_texture = TextureRect.new()
+	camera_texture.name = "PlayerOneCapture"
+	camera_texture.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	camera_texture.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	camera_texture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	camera_texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	camera_texture.texture = ultima_captura
+	feed_box.add_child(camera_texture)
 
-	_add_feed_card(fake_view, "Habitacion", "Jugador 1 revisa un computador prestado.")
-	_add_feed_card(fake_view, "Chat abierto", "Hay mensajes hostiles pendientes de analisis.")
-	_add_feed_card(fake_view, "Carpeta local", "Posibles capturas y archivos relacionados.")
-	_add_feed_card(fake_view, "Red social", "Una cuenta anonima aparece varias veces.")
+	camera_status = Label.new()
+	camera_status.text = Global.t("feed_waiting") if ultima_captura == null else ""
+	camera_status.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	camera_status.add_theme_color_override("font_color", Color(0.68, 0.78, 0.8))
+	feed_box.add_child(camera_status)
 
 
 func _add_feed_card(parent: Control, title: String, body: String) -> void:
@@ -510,12 +520,38 @@ func _set_screen_padding(amount: int) -> void:
 	screen_content.add_theme_constant_override("margin_bottom", amount)
 
 
+func _on_captura_jugador_1_actualizada(bytes: PackedByteArray) -> void:
+	var image: Image = Image.new()
+	var error: Error = image.load_jpg_from_buffer(bytes)
+	if error != OK:
+		return
+
+	ultima_captura = ImageTexture.create_from_image(image)
+	if camera_texture != null:
+		camera_texture.texture = ultima_captura
+	if camera_status != null:
+		camera_status.text = ""
+
+
+func _on_idioma_actualizado() -> void:
+	if minijuego_actual != null:
+		return
+
+	_build_interface()
+	_show_waiting_desktop()
+
+
+func _update_rewards() -> void:
+	if reward_label != null:
+		reward_label.text = Global.t("rewards") % [str(monedas), str(misiones_resueltas), str(misiones_fallidas)]
+
+
 func _add_log(text: String) -> void:
 	if log_list == null:
 		return
 
 	while log_list.get_child_count() >= 6:
-		var old_entry := log_list.get_child(0)
+		var old_entry: Node = log_list.get_child(0)
 		log_list.remove_child(old_entry)
 		old_entry.queue_free()
 

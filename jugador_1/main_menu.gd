@@ -4,6 +4,11 @@ const PORT := 8910
 const MAX_PLAYERS := 2
 const DETECTIVE_SCENE := "res://jugador_1/player_move.tscn"
 const POLICIA_SCENE := "res://jugador_2/jugador_2_ui.tscn"
+const LANGUAGE_OPTIONS := [
+	{"key": "language.es", "code": "es"},
+	{"key": "language.en", "code": "en"},
+	{"key": "language.fr", "code": "fr"}
+]
 
 @onready var records_panel = $MenuScreen/RecordsPanel
 @onready var list_container = $MenuScreen/RecordsPanel/PanelBox/RecordsList
@@ -12,6 +17,9 @@ const POLICIA_SCENE := "res://jugador_2/jugador_2_ui.tscn"
 @onready var multiplayer_box = $MenuScreen/MultiplayerPanel/PanelBox
 @onready var detective_checkbox: CheckBox = $MenuScreen/MultiplayerPanel/PanelBox/CheckBoxDetective
 @onready var policia_checkbox: CheckBox = $MenuScreen/MultiplayerPanel/PanelBox/CheckBoxPolicia
+@onready var volume_slider: HSlider = $MenuScreen/SettingsPanel/PanelBox/VolumeSlider
+@onready var language_option: OptionButton = $MenuScreen/SettingsPanel/PanelBox/lenguajeOption
+
 
 var ip_input: LineEdit
 var host_button: Button
@@ -26,17 +34,82 @@ var selected_role := ""
 var icon = preload("res://jugador_1/menu/start_game_button.png")
 
 func _ready():
+	$MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje1.visible = false
+	$MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje2.visible = false
+	$MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje3.visible = false
+	$MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje4.visible = false
+	$MenuScreen/MultiplayerPanel/PanelBox/sel1.visible = false
+	$MenuScreen/MultiplayerPanel/PanelBox/sel2.visible = false
+	$MenuScreen/MultiplayerPanel/PanelBox/sel3.visible = false
+	$MenuScreen/MultiplayerPanel/PanelBox/sel4.visible = false
 	$MenuScreen.visible = false
 	$start_screen.visible = true
 	help_panel.visible = false
 	multiplayer_panel.visible = false
 	$MenuScreen/SettingsPanel.visible = false
 	$MenuScreen/RecordsPanel.visible = false
+	_setup_volume_slider()
+	_setup_language_options()
 	_build_multiplayer_controls()
+	_apply_language()
 	_connect_multiplayer_signals()
+	if not Global.idioma_actualizado.is_connected(_apply_language):
+		Global.idioma_actualizado.connect(_apply_language)
 	if SaveManager.cargar_records().is_empty():
 		SaveManager.agregar_record("Daniel", 25.4)
 		SaveManager.agregar_record("Keren", 18.2)
+
+
+func _setup_volume_slider() -> void:
+	volume_slider.min_value = 0.0
+	volume_slider.max_value = 100.0
+	volume_slider.step = 1.0
+	_on_volume_slider_value_changed(volume_slider.value)
+
+
+func _setup_language_options() -> void:
+	language_option.clear()
+	for option in LANGUAGE_OPTIONS:
+		language_option.add_item(Global.t(option["key"]))
+		language_option.set_item_metadata(language_option.item_count - 1, option["code"])
+
+	var selected_index := 0
+	for index in range(language_option.item_count):
+		if language_option.get_item_metadata(index) == Global.idioma_juego:
+			selected_index = index
+			break
+
+	language_option.select(selected_index)
+	Global.set_idioma_juego(str(language_option.get_item_metadata(selected_index)))
+	if not language_option.item_selected.is_connected(_on_language_option_item_selected):
+		language_option.item_selected.connect(_on_language_option_item_selected)
+
+
+func _apply_language() -> void:
+	$start_screen/TitleScreen.text = Global.t("title")
+	$start_screen/touchLabel.text = Global.t("click_to_play")
+	$MenuScreen/helpPanel/PanelBox/HelpText.text = Global.t("help_text")
+	$MenuScreen/SettingsPanel/PanelBox/title.text = Global.t("settings")
+	$MenuScreen/SettingsPanel/PanelBox/volumeLabel.text = Global.t("volume")
+	$MenuScreen/SettingsPanel/PanelBox/FullscreenToggle.text = Global.t("fullscreen")
+	$MenuScreen/RecordsPanel/PanelBox/title.text = Global.t("records")
+	$MenuScreen/MultiplayerPanel/PanelBox/selectLabel.text = Global.t("select_character")
+	var multiplayer_info: Label = multiplayer_box.get_node_or_null("MultiplayerInfo") as Label
+	if multiplayer_info != null:
+		multiplayer_info.text = Global.t("multiplayer_info")
+	if ip_input != null:
+		ip_input.placeholder_text = Global.t("server_ip")
+	if host_button != null:
+		host_button.text = Global.t("create_room")
+	if join_button != null:
+		join_button.text = Global.t("join")
+	if ready_button != null and not local_ready:
+		ready_button.text = Global.t("ready")
+	if status_label != null:
+		status_label.text = Global.t("choose_role")
+
+	for index in range(language_option.item_count):
+		language_option.set_item_text(index, Global.t(LANGUAGE_OPTIONS[index]["key"]))
 
 
 func _build_multiplayer_controls() -> void:
@@ -95,7 +168,7 @@ func _build_multiplayer_controls() -> void:
 
 	status_label = Label.new()
 	status_label.name = "MultiplayerStatus"
-	status_label.text = "Selecciona un rol y crea o unete a una sala."
+	status_label.text = Global.t("choose_role")
 	status_label.autowrap_mode = TextServer.AUTOWRAP_WORD
 	status_label.set_anchors_preset(Control.PRESET_TOP_WIDE)
 	status_label.offset_left = 320
@@ -143,10 +216,17 @@ func _on_close_settings_button_gui_input(event: InputEvent) -> void:
 
 func _on_volume_slider_value_changed(value: float) -> void:
 	var bus = AudioServer.get_bus_index("Master")
-	if value == 0:
-		AudioServer.set_bus_volume_db(bus, -80) # silencio total
+	var normalized_volume: float = clampf(value / volume_slider.max_value, 0.0, 1.0)
+	if normalized_volume <= 0.0:
+		AudioServer.set_bus_mute(bus, true)
+		AudioServer.set_bus_volume_db(bus, -80.0)
 	else:
-		AudioServer.set_bus_volume_db(bus, linear_to_db(value))
+		AudioServer.set_bus_mute(bus, false)
+		AudioServer.set_bus_volume_db(bus, linear_to_db(normalized_volume))
+
+
+func _on_language_option_item_selected(index: int) -> void:
+	Global.set_idioma_juego(str(language_option.get_item_metadata(index)))
 
 
 func _on_fullscreen_toggle_toggled(button_pressed) -> void:
@@ -205,15 +285,26 @@ func _on_detective_toggled(button_pressed: bool) -> void:
 	if button_pressed:
 		policia_checkbox.set_pressed_no_signal(false)
 		selected_role = "detective"
+		$MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje1.visible = true
+		$MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje2.visible = true
+		$MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje3.visible = true
+		$MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje4.visible = true
 	elif selected_role == "detective":
 		selected_role = ""
+		$MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje1.visible = false
+		$MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje2.visible = false
+		$MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje3.visible = false
+		$MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje4.visible = false
 	_set_ready_enabled()
-
 
 func _on_policia_toggled(button_pressed: bool) -> void:
 	if button_pressed:
 		detective_checkbox.set_pressed_no_signal(false)
 		selected_role = "policia"
+		$MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje1.visible = false
+		$MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje2.visible = false
+		$MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje3.visible = false
+		$MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje4.visible = false
 	elif selected_role == "policia":
 		selected_role = ""
 	_set_ready_enabled()
@@ -233,7 +324,7 @@ func _on_host_button_pressed() -> void:
 	connected_to_lobby = true
 	peer_roles[1] = selected_role
 	peer_ready[1] = false
-	_set_multiplayer_status("Sala creada en puerto " + str(PORT) + ". Esperando al jugador 2.")
+	_set_multiplayer_status("Sala creada en puerto " + str(PORT) + ". " + Global.t("missing_player"))
 	_set_ready_enabled()
 
 
@@ -253,15 +344,19 @@ func _on_join_button_pressed() -> void:
 
 func _on_ready_button_pressed() -> void:
 	if selected_role.is_empty():
-		_set_multiplayer_status("Elige detective o policia antes de iniciar.")
+		_set_multiplayer_status(Global.t("choose_role_first"))
 		return
 
 	if not multiplayer.has_multiplayer_peer():
-		_set_multiplayer_status("Primero crea una sala o unete a una.")
+		_set_multiplayer_status(Global.t("create_or_join_first"))
 		return
 
 	if multiplayer.is_server() and selected_role != "detective":
 		_set_multiplayer_status("Jugador 1 debe iniciar como Detective.")
+		return
+	
+	if multiplayer.is_server() and selected_role == "detective" and Global.personaje_actual == 0:
+		_set_multiplayer_status("Jugador 1 debe seleccionar un personaje.")
 		return
 
 	if not multiplayer.is_server() and selected_role != "policia":
@@ -270,7 +365,7 @@ func _on_ready_button_pressed() -> void:
 
 	local_ready = true
 	ready_button.disabled = true
-	ready_button.text = "Esperando..."
+	ready_button.text = Global.t("waiting")
 
 	if multiplayer.is_server():
 		peer_roles[1] = selected_role
@@ -296,24 +391,24 @@ func _on_peer_disconnected(id: int) -> void:
 		local_ready = false
 		if peer_roles.has(1):
 			peer_ready[1] = false
-		ready_button.text = "Iniciar juego"
+		ready_button.text = Global.t("ready")
 		_set_multiplayer_status("El otro jugador se desconecto. Esperando una nueva conexion.")
 		_set_ready_enabled()
 
 
 func _on_connected_to_server() -> void:
 	connected_to_lobby = true
-	_set_multiplayer_status("Conectado. Elige rol y presiona Iniciar juego.")
+	_set_multiplayer_status(Global.t("connected_choose"))
 	_set_ready_enabled()
 
 
 func _on_connection_failed() -> void:
-	_set_multiplayer_status("No se pudo conectar con esa IP.")
+	_set_multiplayer_status(Global.t("connection_failed"))
 	_reset_multiplayer_peer()
 
 
 func _on_server_disconnected() -> void:
-	_set_multiplayer_status("Se perdio la conexion con el servidor.")
+	_set_multiplayer_status(Global.t("server_lost"))
 	_reset_multiplayer_peer()
 
 
@@ -322,7 +417,7 @@ func _submit_player_ready(role: String) -> void:
 	if not multiplayer.is_server():
 		return
 
-	var sender_id := multiplayer.get_remote_sender_id()
+	var sender_id: int = multiplayer.get_remote_sender_id()
 	peer_roles[sender_id] = role
 	peer_ready[sender_id] = true
 	_set_multiplayer_status("Jugador " + str(sender_id) + " listo como " + _role_label(role) + ".")
@@ -334,7 +429,7 @@ func _try_start_multiplayer_game() -> void:
 		return
 
 	if peer_roles.size() < MAX_PLAYERS:
-		_set_multiplayer_status("Falta el jugador 2 para iniciar.")
+		_set_multiplayer_status(Global.t("missing_player"))
 		return
 
 	for id in peer_roles.keys():
@@ -343,20 +438,20 @@ func _try_start_multiplayer_game() -> void:
 
 	var used_roles := {}
 	for id in peer_roles.keys():
-		var role := str(peer_roles[id])
+		var role: String = str(peer_roles[id])
 		if used_roles.has(role):
 			peer_ready[id] = false
 			if peer_ready.has(1):
 				peer_ready[1] = false
 				local_ready = false
-				ready_button.text = "Iniciar juego"
-				_set_multiplayer_status("No pueden elegir el mismo personaje. Cambien uno de los roles y vuelvan a iniciar.")
+				ready_button.text = Global.t("ready")
+				_set_multiplayer_status(Global.t("same_role"))
 				_set_ready_enabled()
-			_roles_rejected.rpc("No pueden elegir el mismo personaje. Cambien uno de los roles y vuelvan a iniciar.")
+			_roles_rejected.rpc(Global.t("same_role"))
 			return
 		used_roles[role] = true
 
-	var host_role := str(peer_roles[1])
+	var host_role: String = str(peer_roles[1])
 	for id in peer_roles.keys():
 		if int(id) != 1:
 			_start_multiplayer_game.rpc_id(int(id), str(peer_roles[id]))
@@ -366,7 +461,7 @@ func _try_start_multiplayer_game() -> void:
 @rpc("authority", "call_remote", "reliable")
 func _roles_rejected(message: String) -> void:
 	local_ready = false
-	ready_button.text = "Iniciar juego"
+	ready_button.text = Global.t("ready")
 	_set_multiplayer_status(message)
 	_set_ready_enabled()
 
@@ -387,7 +482,7 @@ func _set_ready_enabled() -> void:
 
 	ready_button.disabled = selected_role.is_empty() or not multiplayer.has_multiplayer_peer() or not connected_to_lobby or local_ready
 	if not local_ready:
-		ready_button.text = "Iniciar juego"
+		ready_button.text = Global.t("ready")
 
 
 func _set_multiplayer_status(text: String) -> void:
@@ -408,3 +503,32 @@ func _role_label(role: String) -> String:
 	if role == "detective":
 		return "Detective"
 	return "Policia"
+
+
+func _on_button_personaje_1_pressed() -> void:
+	$MenuScreen/MultiplayerPanel/PanelBox/sel1.visible = true
+	$MenuScreen/MultiplayerPanel/PanelBox/sel2.visible = false
+	$MenuScreen/MultiplayerPanel/PanelBox/sel3.visible = false
+	$MenuScreen/MultiplayerPanel/PanelBox/sel4.visible = false
+	Global.personaje_actual = 1
+	
+func _on_button_personaje_2_pressed() -> void:
+	$MenuScreen/MultiplayerPanel/PanelBox/sel1.visible = false
+	$MenuScreen/MultiplayerPanel/PanelBox/sel2.visible = true
+	$MenuScreen/MultiplayerPanel/PanelBox/sel3.visible = false
+	$MenuScreen/MultiplayerPanel/PanelBox/sel4.visible = false
+	Global.personaje_actual = 2
+	
+func _on_button_personaje_3_pressed() -> void:
+	$MenuScreen/MultiplayerPanel/PanelBox/sel1.visible = false
+	$MenuScreen/MultiplayerPanel/PanelBox/sel2.visible = false
+	$MenuScreen/MultiplayerPanel/PanelBox/sel3.visible = true
+	$MenuScreen/MultiplayerPanel/PanelBox/sel4.visible = false
+	Global.personaje_actual = 3
+	
+func _on_button_personaje_4_pressed() -> void:
+	$MenuScreen/MultiplayerPanel/PanelBox/sel1.visible = false
+	$MenuScreen/MultiplayerPanel/PanelBox/sel2.visible = false
+	$MenuScreen/MultiplayerPanel/PanelBox/sel3.visible = false
+	$MenuScreen/MultiplayerPanel/PanelBox/sel4.visible = true
+	Global.personaje_actual = 4

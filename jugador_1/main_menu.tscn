@@ -1,18 +1,21 @@
 [gd_scene format=3 uid="uid://b78fx510kw5c8"]
 
 [ext_resource type="Script" uid="uid://dhx5tmb8r8yt" path="res://jugador_1/main_menu.gd" id="1_qe12f"]
-[ext_resource type="Texture2D" uid="uid://cm4cjjarsn7nt" path="res://jugador_1/menu/fondo.png" id="2_7ex1f"]
+[ext_resource type="Texture2D" uid="uid://b84dxhi3bqiw0" path="res://jugador_1/menu/fondo.png" id="2_7ex1f"]
 [ext_resource type="Texture2D" uid="uid://wgr4xxfdwngq" path="res://jugador_1/menu/fondo menu.png" id="2_dtmra"]
-[ext_resource type="FontFile" uid="uid://b0qxytofu2kgf" path="res://jugador_1/menu/varsity_regular.ttf" id="3_8qtwp"]
+[ext_resource type="FontFile" uid="uid://wo5pdorxjlko" path="res://jugador_1/menu/varsity_regular.ttf" id="3_8qtwp"]
 [ext_resource type="Texture2D" uid="uid://c7ko1d17rr2x6" path="res://jugador_1/menu/sombra.png" id="3_a0l4u"]
 [ext_resource type="Texture2D" uid="uid://bil558pp2ga28" path="res://jugador_1/menu/help_button.png" id="5_3oum5"]
-[ext_resource type="Texture2D" uid="uid://dktitx4plwu14" path="res://jugador_1/menu/boton salir.png" id="7_0o4t1"]
+[ext_resource type="Texture2D" uid="uid://bpf8agd4yi4uy" path="res://jugador_1/menu/boton salir.png" id="7_0o4t1"]
 [ext_resource type="Texture2D" uid="uid://7ix7jaqvx24y" path="res://jugador_1/menu/settings_button.png" id="8_70sx0"]
 [ext_resource type="Texture2D" uid="uid://dfn5clqwwd0r4" path="res://jugador_1/menu/records_button.png" id="9_7ex1f"]
 [ext_resource type="Texture2D" uid="uid://bdb5qbi51x4p1" path="res://jugador_1/menu/exit_button.png" id="10_a0l4u"]
 [ext_resource type="Texture2D" uid="uid://b2i61mb3mdkxf" path="res://jugador_1/menu/multiplayer_button.png" id="11_3oum5"]
 [ext_resource type="Texture2D" uid="uid://c5p5bcfnbw0ap" path="res://jugador_1/menu/credits_button.png" id="12_70sx0"]
 [ext_resource type="AudioStream" uid="uid://d1mgmok45vktm" path="res://music/audio fondo.mp3" id="13_7ex1f"]
+[ext_resource type="Texture2D" uid="uid://0w5s1aphhlav" path="res://jugador_1/CharacterModel/Character Model.png" id="13_841vg"]
+[ext_resource type="Texture2D" uid="uid://bmbbm3cbctybi" path="res://jugador_1/CharacterModel/Hairs.png" id="14_s1cvw"]
+[ext_resource type="Texture2D" uid="uid://boqfkfpisoxiv" path="res://jugador_1/CharacterModel/Outfit6.png" id="15_only2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7ex1f"]
 font = ExtResource("3_8qtwp")
@@ -34,6 +37,188 @@ font_size = 75
 [sub_resource type="LabelSettings" id="LabelSettings_0o4t1"]
 font = ExtResource("3_8qtwp")
 font_size = 29
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_7ex1f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_17bwf"]
+atlas = ExtResource("13_841vg")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8hn8b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_17bwf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_we67y"]
+atlas = ExtResource("14_s1cvw")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5vnvh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_we67y")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_516g2"]
+atlas = ExtResource("15_only2")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fuvi4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_516g2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_akalh"]
+atlas = ExtResource("13_841vg")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hhckq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_akalh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_te0hd"]
+atlas = ExtResource("14_s1cvw")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wklha"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_te0hd")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_odd87"]
+atlas = ExtResource("15_only2")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jqhm6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_odd87")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iyu5q"]
+atlas = ExtResource("13_841vg")
+region = Rect2(0, 160, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0045e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iyu5q")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eploe"]
+atlas = ExtResource("14_s1cvw")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k60qt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eploe")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bqgb3"]
+atlas = ExtResource("15_only2")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tejlu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bqgb3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hnbft"]
+atlas = ExtResource("13_841vg")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wnoh3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hnbft")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wa8hb"]
+atlas = ExtResource("14_s1cvw")
+region = Rect2(0, 192, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d3qx3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wa8hb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a433j"]
+atlas = ExtResource("15_only2")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8d1by"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a433j")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="MainMenu" type="Control" unique_id=1923876882]
 layout_mode = 3
@@ -226,10 +411,11 @@ label_settings = SubResource("LabelSettings_0o4t1")
 
 [node name="VolumeSlider" type="HSlider" parent="MenuScreen/SettingsPanel/PanelBox" unique_id=58178302]
 layout_mode = 0
-offset_left = 14.0
-offset_top = 109.0
-offset_right = 951.0
-offset_bottom = 214.0
+offset_left = 10.0
+offset_top = 104.0
+offset_right = 947.0
+offset_bottom = 209.0
+value = 100.0
 
 [node name="FullscreenToggle" type="CheckBox" parent="MenuScreen/SettingsPanel/PanelBox" unique_id=436273488]
 layout_mode = 0
@@ -238,6 +424,14 @@ offset_top = 182.0
 offset_right = 240.0
 offset_bottom = 234.0
 text = "PANTALLA COMPLETA"
+
+[node name="lenguajeOption" type="OptionButton" parent="MenuScreen/SettingsPanel/PanelBox" unique_id=159188273]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 246.0
+offset_right = 216.0
+offset_bottom = 305.0
+button_group = SubResource("ButtonGroup_7ex1f")
 
 [node name="RecordsButton" type="Control" parent="MenuScreen" unique_id=129020338]
 anchors_preset = 0
@@ -329,10 +523,10 @@ offset_bottom = 40.0
 
 [node name="TextureRect" type="TextureRect" parent="MenuScreen/multiplayerButton" unique_id=1565722551]
 layout_mode = 0
-offset_left = 954.0
-offset_top = 505.0
-offset_right = 1153.0
-offset_bottom = 644.0
+offset_left = 6.0
+offset_top = 360.0
+offset_right = 150.0
+offset_bottom = 444.0
 texture = ExtResource("11_3oum5")
 expand_mode = 1
 
@@ -351,7 +545,6 @@ texture = ExtResource("12_70sx0")
 expand_mode = 1
 
 [node name="MultiplayerPanel" type="Control" parent="MenuScreen" unique_id=1424624549]
-visible = false
 z_index = 1
 anchors_preset = 0
 offset_left = -16.0
@@ -366,17 +559,17 @@ color = Color(0, 0, 0, 0.6431373)
 
 [node name="PanelBox" type="Panel" parent="MenuScreen/MultiplayerPanel" unique_id=1633013701]
 layout_mode = 0
-offset_left = 98.0
-offset_top = 89.0
-offset_right = 1066.0
-offset_bottom = 576.0
+offset_left = 48.0
+offset_top = 31.0
+offset_right = 1148.0
+offset_bottom = 612.0
 
 [node name="selectLabel" type="Label" parent="MenuScreen/MultiplayerPanel/PanelBox" unique_id=801705537]
 layout_mode = 0
-offset_left = 246.0
-offset_top = 8.0
-offset_right = 658.0
-offset_bottom = 71.0
+offset_left = 336.0
+offset_top = 12.0
+offset_right = 748.0
+offset_bottom = 75.0
 text = "Selecciona que personaje quieres ser:
 "
 label_settings = SubResource("LabelSettings_j5v2v")
@@ -386,10 +579,10 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.068
 anchor_bottom = 0.12900001
-offset_left = 579.0
-offset_top = 103.0
-offset_right = 623.176
-offset_bottom = 103.176994
+offset_left = 51.0
+offset_top = 83.0
+offset_right = 95.17601
+offset_bottom = 83.177
 text = "DETECTIVE"
 flat = true
 
@@ -398,10 +591,10 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.068
 anchor_bottom = 0.12900001
-offset_left = 215.0
-offset_top = 104.0
-offset_right = 239.176
-offset_bottom = 104.176994
+offset_left = 51.0
+offset_top = 132.0
+offset_right = 75.17601
+offset_bottom = 132.177
 text = "POLICIA"
 flat = true
 
@@ -412,12 +605,140 @@ offset_bottom = 40.0
 
 [node name="TextureRect" type="TextureRect" parent="MenuScreen/MultiplayerPanel/PanelBox/CloseButton" unique_id=202220195]
 layout_mode = 0
-offset_left = 830.0
-offset_top = 437.0
-offset_right = 961.0
-offset_bottom = 482.0
+offset_left = 945.0
+offset_top = 521.0
+offset_right = 1076.0
+offset_bottom = 566.0
 texture = ExtResource("7_0o4t1")
 expand_mode = 1
+
+[node name="sel1" type="ColorRect" parent="MenuScreen/MultiplayerPanel/PanelBox" unique_id=2104734260]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 89.0
+offset_right = 303.0
+offset_bottom = 201.0
+
+[node name="sel2" type="ColorRect" parent="MenuScreen/MultiplayerPanel/PanelBox" unique_id=634004423]
+layout_mode = 0
+offset_left = 326.0
+offset_top = 88.0
+offset_right = 422.0
+offset_bottom = 200.0
+
+[node name="sel3" type="ColorRect" parent="MenuScreen/MultiplayerPanel/PanelBox" unique_id=1097968533]
+layout_mode = 0
+offset_left = 445.0
+offset_top = 90.0
+offset_right = 541.0
+offset_bottom = 202.0
+
+[node name="sel4" type="ColorRect" parent="MenuScreen/MultiplayerPanel/PanelBox" unique_id=1541795180]
+layout_mode = 0
+offset_left = 573.0
+offset_top = 89.0
+offset_right = 669.0
+offset_bottom = 201.0
+
+[node name="ButtonPersonaje1" type="Button" parent="MenuScreen/MultiplayerPanel/PanelBox" unique_id=345498328]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 102.0
+offset_right = 308.0
+offset_bottom = 195.0
+flat = true
+
+[node name="personaje1" type="Node2D" parent="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje1" unique_id=1524165585]
+
+[node name="cuerpo" type="AnimatedSprite2D" parent="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje1/personaje1" unique_id=2135106733]
+position = Vector2(47.5, 38.000004)
+scale = Vector2(3.0937495, 2.8125005)
+sprite_frames = SubResource("SpriteFrames_8hn8b")
+
+[node name="cabello" type="AnimatedSprite2D" parent="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje1/personaje1" unique_id=882566618]
+position = Vector2(48.50001, 36.5)
+scale = Vector2(3.4062498, 3.09375)
+sprite_frames = SubResource("SpriteFrames_5vnvh")
+
+[node name="ropa" type="AnimatedSprite2D" parent="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje1/personaje1" unique_id=1510902514]
+position = Vector2(47.999992, 38)
+scale = Vector2(3.2187505, 3.25)
+sprite_frames = SubResource("SpriteFrames_fuvi4")
+
+[node name="ButtonPersonaje2" type="Button" parent="MenuScreen/MultiplayerPanel/PanelBox" unique_id=1331960961]
+layout_mode = 0
+offset_left = 324.0
+offset_top = 102.0
+offset_right = 425.0
+offset_bottom = 195.0
+flat = true
+
+[node name="personaje1" type="Node2D" parent="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje2" unique_id=564279778]
+
+[node name="cuerpo" type="AnimatedSprite2D" parent="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje2/personaje1" unique_id=923933866]
+position = Vector2(47.5, 38.000004)
+scale = Vector2(3.0937495, 2.8125005)
+sprite_frames = SubResource("SpriteFrames_hhckq")
+
+[node name="cabello" type="AnimatedSprite2D" parent="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje2/personaje1" unique_id=86097353]
+position = Vector2(48.50001, 36.5)
+scale = Vector2(3.4062498, 3.09375)
+sprite_frames = SubResource("SpriteFrames_wklha")
+
+[node name="ropa" type="AnimatedSprite2D" parent="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje2/personaje1" unique_id=241404247]
+position = Vector2(47.999992, 38)
+scale = Vector2(3.2187505, 3.25)
+sprite_frames = SubResource("SpriteFrames_jqhm6")
+
+[node name="ButtonPersonaje3" type="Button" parent="MenuScreen/MultiplayerPanel/PanelBox" unique_id=1898707114]
+layout_mode = 0
+offset_left = 446.0
+offset_top = 100.0
+offset_right = 547.0
+offset_bottom = 193.0
+flat = true
+
+[node name="personaje1" type="Node2D" parent="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje3" unique_id=1710081927]
+
+[node name="cuerpo" type="AnimatedSprite2D" parent="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje3/personaje1" unique_id=873288801]
+position = Vector2(47.5, 38.000004)
+scale = Vector2(3.0937495, 2.8125005)
+sprite_frames = SubResource("SpriteFrames_0045e")
+
+[node name="cabello" type="AnimatedSprite2D" parent="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje3/personaje1" unique_id=2013718949]
+position = Vector2(48.50001, 36.5)
+scale = Vector2(3.4062498, 3.09375)
+sprite_frames = SubResource("SpriteFrames_k60qt")
+
+[node name="ropa" type="AnimatedSprite2D" parent="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje3/personaje1" unique_id=1586388184]
+position = Vector2(47.999992, 38)
+scale = Vector2(3.2187505, 3.25)
+sprite_frames = SubResource("SpriteFrames_tejlu")
+
+[node name="ButtonPersonaje4" type="Button" parent="MenuScreen/MultiplayerPanel/PanelBox" unique_id=455785071]
+layout_mode = 0
+offset_left = 573.0
+offset_top = 100.0
+offset_right = 674.0
+offset_bottom = 193.0
+flat = true
+
+[node name="personaje1" type="Node2D" parent="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje4" unique_id=849437797]
+
+[node name="cuerpo" type="AnimatedSprite2D" parent="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje4/personaje1" unique_id=1302149526]
+position = Vector2(47.5, 38.000004)
+scale = Vector2(3.0937495, 2.8125005)
+sprite_frames = SubResource("SpriteFrames_wnoh3")
+
+[node name="cabello" type="AnimatedSprite2D" parent="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje4/personaje1" unique_id=1544948392]
+position = Vector2(48.50001, 36.5)
+scale = Vector2(3.4062498, 3.09375)
+sprite_frames = SubResource("SpriteFrames_d3qx3")
+
+[node name="ropa" type="AnimatedSprite2D" parent="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje4/personaje1" unique_id=371230260]
+position = Vector2(47.999992, 38)
+scale = Vector2(3.2187505, 3.25)
+sprite_frames = SubResource("SpriteFrames_8d1by")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=936705866]
 stream = ExtResource("13_7ex1f")
@@ -436,3 +757,7 @@ autoplay = true
 [connection signal="gui_input" from="MenuScreen/exitButton/TextureRect" to="." method="_on_texture_rect_gui_input"]
 [connection signal="gui_input" from="MenuScreen/multiplayerButton" to="." method="_on_multiplayer_button_gui_input"]
 [connection signal="gui_input" from="MenuScreen/MultiplayerPanel/PanelBox/CloseButton" to="." method="_on_close_Multiplayer_button_gui_input"]
+[connection signal="pressed" from="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje1" to="." method="_on_button_personaje_1_pressed"]
+[connection signal="pressed" from="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje2" to="." method="_on_button_personaje_2_pressed"]
+[connection signal="pressed" from="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje3" to="." method="_on_button_personaje_3_pressed"]
+[connection signal="pressed" from="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje4" to="." method="_on_button_personaje_4_pressed"]

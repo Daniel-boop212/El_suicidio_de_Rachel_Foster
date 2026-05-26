@@ -18,6 +18,9 @@ func _ready():
 	
 	# Aseguramos que el panel procese incluso si el juego se pausa
 	accuse_panel.process_mode = Node.PROCESS_MODE_ALWAYS
+	if not Global.idioma_actualizado.is_connected(_aplicar_idioma):
+		Global.idioma_actualizado.connect(_aplicar_idioma)
+	_aplicar_idioma()
 
 # ------------------------
 # DETECCIÓN DEL PLAYER
@@ -45,7 +48,7 @@ func mostrar_panel_acusacion():
 
 	# 🔹 BOTÓN "VOLVER" (El primero para que reciba el foco)
 	var btn_no_se = Button.new()
-	btn_no_se.text = "Aún no lo sé"
+	btn_no_se.text = Global.t("dont_know")
 	btn_no_se.pressed.connect(_on_acusar_pressed.bind("nadie"))
 	buttons_container.add_child(btn_no_se)
 
@@ -73,7 +76,7 @@ func _on_acusar_pressed(pista):
 	accuse_panel.visible = false
 
 	if pista == "nadie":
-		dialogo.mostrar_dialogo("Sigue investigando...")
+		dialogo.mostrar_dialogo(Global.t("keep_investigating"))
 		return
 
 	# Lógica de resolución
@@ -92,9 +95,15 @@ func _process(_delta):
 
 	if player_near and Input.is_action_just_pressed("ui_accept"):
 		if Global.pistas_descubiertas.is_empty():
-			dialogo.mostrar_dialogo(texto_dialogop)
+			dialogo.mostrar_dialogo(Global.traducir_texto_directo(texto_dialogop))
 		else:
 			# Nota: Si mostrar_dialogo pausa el juego, 
 			# mostrar_panel_acusacion debe llamarse después.
-			dialogo.mostrar_dialogo(texto_dialogo_acusacion)
+			dialogo.mostrar_dialogo(Global.traducir_texto_directo(texto_dialogo_acusacion))
 			mostrar_panel_acusacion()
+
+
+func _aplicar_idioma() -> void:
+	var title := accuse_panel.get_node_or_null("PanelBox/Title") as Label
+	if title != null:
+		title.text = Global.t("what_ask")

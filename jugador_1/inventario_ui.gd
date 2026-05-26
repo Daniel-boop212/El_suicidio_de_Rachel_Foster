@@ -12,6 +12,8 @@ func _ready() -> void:
 	contenedor.visible = false
 	if not Global.pistas_actualizadas.is_connected(actualizar_inventario):
 		Global.pistas_actualizadas.connect(actualizar_inventario)
+	if not Global.idioma_actualizado.is_connected(actualizar_inventario):
+		Global.idioma_actualizado.connect(actualizar_inventario)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("abrir_inventario"):
@@ -28,7 +30,7 @@ func actualizar_inventario() -> void:
 
 	if Global.pistas_descubiertas.is_empty():
 		var aviso := Label.new()
-		aviso.text = "No tienes pistas aun..."
+		aviso.text = Global.t("no_clues")
 		aviso.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		aviso.autowrap_mode = TextServer.AUTOWRAP_WORD
 		lista_pistas.add_child(aviso)
@@ -36,7 +38,7 @@ func actualizar_inventario() -> void:
 
 	for pista in Global.pistas_descubiertas:
 		var etiqueta := Label.new()
-		etiqueta.text = "Pista: " + str(pista)
+		etiqueta.text = Global.t("clue_prefix") + str(pista)
 		etiqueta.autowrap_mode = TextServer.AUTOWRAP_WORD
 		lista_pistas.add_child(etiqueta)
 
