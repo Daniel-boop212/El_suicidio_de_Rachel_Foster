@@ -39,55 +39,6 @@ var icon = preload("res://jugador_1/menu/start_game_button.png")
 
 func _ready():
 	panel_creditos.visible = false
-	texto_creditos.text = """
-CRÉDITOS
-
-Asignatura
-Estructura de datos 2
-
-
-Docente
-Eduardo Angulo
-
-
-Semestre
-4
-
-
-Director del Proyecto
-Daniel Andrade
-
-
-Programación
-Daniel Andrade
-Gerhild Donado
-Alvaro Useche
-
-
-Diseño de Nivel
-Daniel Andrade
-Alvaro Useche
-
-
-Sistema Multijugador
-Daniel Andrade
-
-
-Interfaz
-Daniel Andrade
-
-
-Música y Sonidos
-Gerhild Donado
-Recursos libres
-
-
-Motor del Juego
-Godot Engine
-
-
-Gracias por jugar
-"""
 
 	$MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje1.visible = false
 	$MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje2.visible = false
@@ -122,6 +73,7 @@ func _process(delta):
 
 func _on_boton_creditos_gui_input(event: InputEvent):
 	if event is InputEventMouseButton and event.pressed:
+		texto_creditos.text = Global.t("creditos")
 		panel_creditos.visible = true
 		scroll_pos = 0.0
 		await get_tree().process_frame

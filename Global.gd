@@ -11,6 +11,56 @@ const TRADUCCIONES := {
 		"language.es": "Español",
 		"language.en": "English",
 		"language.fr": "Francais",
+		"creditos" : """
+CRÉDITOS
+
+Asignatura
+Estructura de datos 2
+
+
+Docente
+Eduardo Angulo
+
+
+Semestre
+4
+
+
+Director del Proyecto
+Daniel Andrade
+
+
+Programación
+Daniel Andrade
+Gerhild Donado
+Alvaro Useche
+
+
+Diseño de Nivel
+Daniel Andrade
+Alvaro Useche
+
+
+Sistema Multijugador
+Daniel Andrade
+
+
+Interfaz
+Daniel Andrade
+
+
+Música y Sonidos
+Gerhild Donado
+Recursos libres
+
+
+Motor del Juego
+Godot Engine
+
+
+Gracias por jugar
+""",
+
 		"title": "EL SUICIDIO DE RACHEL FOSTER",
 		"click_to_play": "haz clic para jugar",
 		"settings": "AJUSTES",
@@ -84,6 +134,55 @@ const TRADUCCIONES := {
 		"language.es": "Español",
 		"language.en": "English",
 		"language.fr": "Francais",
+		"creditos" : """
+CREDITS
+
+Course
+Data Structures 2
+
+
+Professor
+Eduardo Angulo
+
+
+Semester
+4
+
+
+Project Director
+Daniel Andrade
+
+
+Programming
+Daniel Andrade
+Gerhild Donado
+Alvaro Useche
+
+
+Level Design
+Daniel Andrade
+Alvaro Useche
+
+
+Multiplayer System
+Daniel Andrade
+
+
+Interface
+Daniel Andrade
+
+
+Music and Sounds
+Gerhild Donado
+Free Resources
+
+
+Game Engine
+Godot Engine
+
+
+Thanks for playing
+""",
 		"title": "THE SUICIDE OF RACHEL FOSTER",
 		"click_to_play": "click to play",
 		"settings": "SETTINGS",
@@ -157,6 +256,55 @@ const TRADUCCIONES := {
 		"language.es": "Español",
 		"language.en": "English",
 		"language.fr": "Francais",
+		"creditos": """
+CRÉDITS
+
+Matière
+Structures de données 2
+
+
+Professeur
+Eduardo Angulo
+
+
+Semestre
+4
+
+
+Directeur du Projet
+Daniel Andrade
+
+
+Programmation
+Daniel Andrade
+Gerhild Donado
+Alvaro Useche
+
+
+Conception des Niveaux
+Daniel Andrade
+Alvaro Useche
+
+
+Système Multijoueur
+Daniel Andrade
+
+
+Interface
+Daniel Andrade
+
+
+Musique et Sons
+Gerhild Donado
+Ressources libres
+
+
+Moteur du Jeu
+Godot Engine
+
+
+Merci d'avoir joué
+""",
 		"title": "LE SUICIDE DE RACHEL FOSTER",
 		"click_to_play": "cliquez pour jouer",
 		"settings": "PARAMETRES",
