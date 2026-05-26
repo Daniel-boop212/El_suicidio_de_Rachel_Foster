@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://c5p5bcfnbw0ap" path="res://jugador_1/menu/credits_button.png" id="12_70sx0"]
 [ext_resource type="AudioStream" uid="uid://d1mgmok45vktm" path="res://music/audio fondo.mp3" id="13_7ex1f"]
 [ext_resource type="Texture2D" uid="uid://0w5s1aphhlav" path="res://jugador_1/CharacterModel/Character Model.png" id="13_841vg"]
+[ext_resource type="Texture2D" uid="uid://epsnyda75ig6" path="res://jugador_1/menu/boton_limpiar.png" id="13_s1cvw"]
 [ext_resource type="Texture2D" uid="uid://bmbbm3cbctybi" path="res://jugador_1/CharacterModel/Hairs.png" id="14_s1cvw"]
 [ext_resource type="Texture2D" uid="uid://boqfkfpisoxiv" path="res://jugador_1/CharacterModel/Outfit6.png" id="15_only2"]
 
@@ -297,6 +298,62 @@ offset_bottom = 91.0
 texture = ExtResource("5_3oum5")
 expand_mode = 1
 
+[node name="creditsButton" type="Control" parent="MenuScreen" unique_id=1051400427]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="MenuScreen/creditsButton" unique_id=1969900366]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 554.0
+offset_right = 150.0
+offset_bottom = 638.0
+texture = ExtResource("12_70sx0")
+expand_mode = 1
+
+[node name="exitButton" type="Control" parent="MenuScreen" unique_id=1791276052]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="MenuScreen/exitButton" unique_id=1995329996]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 458.0
+offset_right = 152.0
+offset_bottom = 549.0
+texture = ExtResource("10_a0l4u")
+expand_mode = 1
+
+[node name="settingButton" type="Control" parent="MenuScreen" unique_id=1256579571]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="MenuScreen/settingButton" unique_id=2111440477]
+layout_mode = 0
+offset_left = 856.0
+offset_top = 1.0
+offset_right = 998.0
+offset_bottom = 89.0
+texture = ExtResource("8_70sx0")
+expand_mode = 1
+
+[node name="multiplayerButton" type="Control" parent="MenuScreen" unique_id=1087518248]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="MenuScreen/multiplayerButton" unique_id=1565722551]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 360.0
+offset_right = 150.0
+offset_bottom = 444.0
+texture = ExtResource("11_3oum5")
+expand_mode = 1
+
 [node name="helpPanel" type="Control" parent="MenuScreen" unique_id=875982332]
 visible = false
 z_index = 1
@@ -340,20 +397,6 @@ offset_top = 437.0
 offset_right = 961.0
 offset_bottom = 482.0
 texture = ExtResource("7_0o4t1")
-expand_mode = 1
-
-[node name="settingButton" type="Control" parent="MenuScreen" unique_id=1256579571]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="TextureRect" type="TextureRect" parent="MenuScreen/settingButton" unique_id=2111440477]
-layout_mode = 0
-offset_left = 856.0
-offset_top = 1.0
-offset_right = 998.0
-offset_bottom = 89.0
-texture = ExtResource("8_70sx0")
 expand_mode = 1
 
 [node name="SettingsPanel" type="Control" parent="MenuScreen" unique_id=884943731]
@@ -471,11 +514,15 @@ offset_right = 158.0
 offset_bottom = 571.0
 
 [node name="CloseRecordsButton" type="Control" parent="MenuScreen/RecordsPanel/PanelBox" unique_id=1590160346]
-anchors_preset = 0
-offset_left = -21.0
-offset_top = -23.0
-offset_right = 19.0
-offset_bottom = 17.0
+layout_mode = 1
+anchor_left = 0.060000002
+anchor_top = 0.035
+anchor_right = 0.060000002
+anchor_bottom = 0.035
+offset_left = -58.08
+offset_top = -29.044998
+offset_right = -18.080002
+offset_bottom = 10.955002
 
 [node name="TextureRect" type="TextureRect" parent="MenuScreen/RecordsPanel/PanelBox/CloseRecordsButton" unique_id=1032409713]
 layout_mode = 0
@@ -502,49 +549,18 @@ offset_top = 92.0
 offset_right = 940.0
 offset_bottom = 391.0
 
-[node name="exitButton" type="Control" parent="MenuScreen" unique_id=1791276052]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="TextureRect" type="TextureRect" parent="MenuScreen/exitButton" unique_id=1995329996]
+[node name="CleanButton" type="Button" parent="MenuScreen/RecordsPanel/PanelBox" unique_id=1578503245]
 layout_mode = 0
-offset_left = 7.0
-offset_top = 458.0
-offset_right = 152.0
-offset_bottom = 549.0
-texture = ExtResource("10_a0l4u")
-expand_mode = 1
-
-[node name="multiplayerButton" type="Control" parent="MenuScreen" unique_id=1087518248]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="TextureRect" type="TextureRect" parent="MenuScreen/multiplayerButton" unique_id=1565722551]
-layout_mode = 0
-offset_left = 6.0
-offset_top = 360.0
-offset_right = 150.0
-offset_bottom = 444.0
-texture = ExtResource("11_3oum5")
-expand_mode = 1
-
-[node name="creditsButton" type="Control" parent="MenuScreen" unique_id=1051400427]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="TextureRect" type="TextureRect" parent="MenuScreen/creditsButton" unique_id=1969900366]
-layout_mode = 0
-offset_left = 9.0
-offset_top = 554.0
-offset_right = 150.0
-offset_bottom = 638.0
-texture = ExtResource("12_70sx0")
-expand_mode = 1
+offset_left = 633.0
+offset_top = 421.0
+offset_right = 815.0
+offset_bottom = 472.0
+icon = ExtResource("13_s1cvw")
+flat = true
+expand_icon = true
 
 [node name="MultiplayerPanel" type="Control" parent="MenuScreen" unique_id=1424624549]
+visible = false
 z_index = 1
 anchors_preset = 0
 offset_left = -16.0
@@ -740,6 +756,54 @@ position = Vector2(47.999992, 38)
 scale = Vector2(3.2187505, 3.25)
 sprite_frames = SubResource("SpriteFrames_8d1by")
 
+[node name="creditosPanel" type="Control" parent="MenuScreen" unique_id=1151132188]
+z_index = 1
+anchors_preset = 0
+offset_left = -16.0
+offset_right = 1150.0
+offset_bottom = 643.0
+
+[node name="DarkOverlay" type="ColorRect" parent="MenuScreen/creditosPanel" unique_id=726527992]
+layout_mode = 0
+offset_right = 1169.0
+offset_bottom = 645.0
+color = Color(0, 0, 0, 0.6431373)
+
+[node name="PanelBox" type="Panel" parent="MenuScreen/creditosPanel" unique_id=2118620164]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 89.0
+offset_right = 1066.0
+offset_bottom = 576.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MenuScreen/creditosPanel/PanelBox" unique_id=1469768196]
+layout_mode = 0
+offset_left = 289.0
+offset_top = 10.0
+offset_right = 954.0
+offset_bottom = 431.0
+follow_focus = true
+
+[node name="RichTextLabel" type="Label" parent="MenuScreen/creditosPanel/PanelBox/ScrollContainer" unique_id=1903674705]
+clip_contents = true
+layout_mode = 2
+label_settings = SubResource("LabelSettings_j5v2v")
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Control" parent="MenuScreen/creditosPanel/PanelBox" unique_id=137114566]
+anchors_preset = 0
+offset_right = 46.0
+offset_bottom = 39.0
+
+[node name="TextureRect" type="TextureRect" parent="MenuScreen/creditosPanel/PanelBox/CloseButton" unique_id=65577905]
+layout_mode = 0
+offset_left = 830.0
+offset_top = 437.0
+offset_right = 961.0
+offset_bottom = 482.0
+texture = ExtResource("7_0o4t1")
+expand_mode = 1
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=936705866]
 stream = ExtResource("13_7ex1f")
 pitch_scale = 1.02
@@ -747,17 +811,20 @@ autoplay = true
 
 [connection signal="gui_input" from="start_screen" to="." method="_on_start_screen_gui_input"]
 [connection signal="gui_input" from="MenuScreen/helpButton" to="." method="_on_help_button_gui_input"]
-[connection signal="gui_input" from="MenuScreen/helpPanel/PanelBox/CloseButton" to="." method="_on_close_button_gui_input"]
+[connection signal="gui_input" from="MenuScreen/creditsButton" to="." method="_on_boton_creditos_gui_input"]
+[connection signal="gui_input" from="MenuScreen/exitButton/TextureRect" to="." method="_on_texture_rect_gui_input"]
 [connection signal="gui_input" from="MenuScreen/settingButton" to="." method="_on_setting_button_gui_input"]
+[connection signal="gui_input" from="MenuScreen/multiplayerButton" to="." method="_on_multiplayer_button_gui_input"]
+[connection signal="gui_input" from="MenuScreen/helpPanel/PanelBox/CloseButton" to="." method="_on_close_button_gui_input"]
 [connection signal="gui_input" from="MenuScreen/SettingsPanel/PanelBox/CloseSettingsButton" to="." method="_on_close_settings_button_gui_input"]
 [connection signal="value_changed" from="MenuScreen/SettingsPanel/PanelBox/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
 [connection signal="toggled" from="MenuScreen/SettingsPanel/PanelBox/FullscreenToggle" to="." method="_on_fullscreen_toggle_toggled"]
 [connection signal="gui_input" from="MenuScreen/RecordsButton" to="." method="_on_records_button_gui_input"]
 [connection signal="gui_input" from="MenuScreen/RecordsPanel/PanelBox/CloseRecordsButton" to="." method="_on_close_records_button_gui_input"]
-[connection signal="gui_input" from="MenuScreen/exitButton/TextureRect" to="." method="_on_texture_rect_gui_input"]
-[connection signal="gui_input" from="MenuScreen/multiplayerButton" to="." method="_on_multiplayer_button_gui_input"]
+[connection signal="pressed" from="MenuScreen/RecordsPanel/PanelBox/CleanButton" to="." method="_on_clean_button_pressed"]
 [connection signal="gui_input" from="MenuScreen/MultiplayerPanel/PanelBox/CloseButton" to="." method="_on_close_Multiplayer_button_gui_input"]
 [connection signal="pressed" from="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje1" to="." method="_on_button_personaje_1_pressed"]
 [connection signal="pressed" from="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje2" to="." method="_on_button_personaje_2_pressed"]
 [connection signal="pressed" from="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje3" to="." method="_on_button_personaje_3_pressed"]
 [connection signal="pressed" from="MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje4" to="." method="_on_button_personaje_4_pressed"]
+[connection signal="gui_input" from="MenuScreen/creditosPanel/PanelBox/CloseButton" to="." method="_on_boton_cerrar_creditos_gui_input"]

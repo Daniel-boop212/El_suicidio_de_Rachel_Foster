@@ -3032,5 +3032,3 @@ position = Vector2(153.5, -236.5)
 shape = SubResource("RectangleShape2D_0tamx")
 
 [connection signal="timeout" from="CanvasLayer/Timer" to="CanvasLayer" method="_on_timer_timeout"]
-[connection signal="pressed" from="MenuUI/ContenedorPrincipal/ColorRect/ColorRect/Button" to="MenuUI" method="_on_button_pressed"]
-[connection signal="pressed" from="MenuUI/ContenedorPrincipal/ColorRect/ColorRect2/Button" to="MenuUI" method="_on_button_salir_pressed"]

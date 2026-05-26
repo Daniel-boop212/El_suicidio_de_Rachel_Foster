@@ -19,8 +19,12 @@ const LANGUAGE_OPTIONS := [
 @onready var policia_checkbox: CheckBox = $MenuScreen/MultiplayerPanel/PanelBox/CheckBoxPolicia
 @onready var volume_slider: HSlider = $MenuScreen/SettingsPanel/PanelBox/VolumeSlider
 @onready var language_option: OptionButton = $MenuScreen/SettingsPanel/PanelBox/lenguajeOption
+@onready var panel_creditos = $MenuScreen/creditosPanel
+@onready var scroll = $MenuScreen/creditosPanel/PanelBox/ScrollContainer
+@onready var texto_creditos = $MenuScreen/creditosPanel/PanelBox/ScrollContainer/RichTextLabel
 
-
+var scroll_pos := 0.0
+var velocidad_scroll := 40.0
 var ip_input: LineEdit
 var host_button: Button
 var join_button: Button
@@ -34,6 +38,57 @@ var selected_role := ""
 var icon = preload("res://jugador_1/menu/start_game_button.png")
 
 func _ready():
+	panel_creditos.visible = false
+	texto_creditos.text = """
+CRÉDITOS
+
+Asignatura
+Estructura de datos 2
+
+
+Docente
+Eduardo Angulo
+
+
+Semestre
+4
+
+
+Director del Proyecto
+Daniel Andrade
+
+
+Programación
+Daniel Andrade
+Gerhild Donado
+Alvaro Useche
+
+
+Diseño de Nivel
+Daniel Andrade
+Alvaro Useche
+
+
+Sistema Multijugador
+Daniel Andrade
+
+
+Interfaz
+Daniel Andrade
+
+
+Música y Sonidos
+Gerhild Donado
+Recursos libres
+
+
+Motor del Juego
+Godot Engine
+
+
+Gracias por jugar
+"""
+
 	$MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje1.visible = false
 	$MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje2.visible = false
 	$MenuScreen/MultiplayerPanel/PanelBox/ButtonPersonaje3.visible = false
@@ -59,6 +114,23 @@ func _ready():
 		SaveManager.agregar_record("Daniel", 25.4)
 		SaveManager.agregar_record("Keren", 18.2)
 
+func _process(delta):
+	if panel_creditos.visible:
+		scroll_pos += velocidad_scroll * delta
+		scroll.scroll_vertical = int(scroll_pos)
+
+
+func _on_boton_creditos_gui_input(event: InputEvent):
+	if event is InputEventMouseButton and event.pressed:
+		panel_creditos.visible = true
+		scroll_pos = 0.0
+		await get_tree().process_frame
+		scroll.scroll_vertical = 0
+
+
+func _on_boton_cerrar_creditos_gui_input(event: InputEvent):
+	if event is InputEventMouseButton and event.pressed:
+		panel_creditos.visible = false
 
 func _setup_volume_slider() -> void:
 	volume_slider.min_value = 0.0
@@ -247,7 +319,6 @@ func _on_records_button_gui_input(event: InputEvent) -> void:
 		mostrar_records()
 		
 func mostrar_records():
-	# limpiar lista
 	for child in list_container.get_children():
 		child.queue_free()
 
@@ -258,6 +329,9 @@ func mostrar_records():
 		label.text = r["nombre"] + " - " + str(r["tiempo"]) + "s"
 		list_container.add_child(label)
 
+func _on_clean_button_pressed() -> void:
+	SaveManager.limpiar_records()
+	mostrar_records()
 
 func _on_start_screen_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:

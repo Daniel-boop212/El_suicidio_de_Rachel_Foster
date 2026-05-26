@@ -36,3 +36,6 @@ func agregar_record(nombre, tiempo):
 	records.sort_custom(func(a, b): return a["tiempo"] < b["tiempo"])
 
 	guardar_records(records)
+	
+func limpiar_records():
+	guardar_records([])

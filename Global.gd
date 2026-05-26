@@ -335,6 +335,18 @@ func traducir_arbol(root: Node) -> void:
 
 	for child in root.get_children():
 		traducir_arbol(child)
+		
+@rpc("call_local")
+func volver_al_menu():
+	multiplayer.multiplayer_peer = null
+	get_tree().change_scene_to_file("res://jugador_1/main_menu.tscn")
+
+
+func salir_partida():
+	if multiplayer.has_multiplayer_peer():
+		volver_al_menu.rpc()
+	else:
+		volver_al_menu()
 
 @rpc("any_peer", "call_remote", "unreliable")
 func recibir_captura_jugador_1(bytes: PackedByteArray) -> void:
