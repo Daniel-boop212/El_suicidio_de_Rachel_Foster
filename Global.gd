@@ -446,6 +446,9 @@ var culpable_correcto := "Juan"
 var rol_multijugador := ""
 var es_partida_multijugador := false
 var idioma_juego := "es"
+var tareas_jugador_2_enviadas: Array[String] = []
+var pistas_finales_usadas: Array[String] = []
+var final_el_precipicio := ""
 
 func set_idioma_juego(idioma: String) -> void:
 	if not TRADUCCIONES.has(idioma):
@@ -500,25 +503,64 @@ func salir_partida():
 func recibir_captura_jugador_1(bytes: PackedByteArray) -> void:
 	captura_jugador_1_actualizada.emit(bytes)
 
-func add_pista(nombre_pista: String) -> void:
+func add_pista(nombre_pista: String) -> bool:
 	if nombre_pista.strip_edges().is_empty():
-		return
+		return false
 
 	if pistas_descubiertas.has(nombre_pista):
 		print("Sistema Global: Ya tienes esta pista.")
-		return
+		return false
 
 	pistas_descubiertas.append(nombre_pista)
 	pistas_actualizadas.emit()
 	print("Sistema Global: Pista guardada -> ", nombre_pista)
+	return true
 
 # Compatibilidad con scripts o escenas antiguos que llamaban al metodo con tilde.
 func añadir_pista(nombre_pista: String) -> void:
 	add_pista(nombre_pista)
 
+func tiene_pista(nombre_pista: String) -> bool:
+	return pistas_descubiertas.has(nombre_pista)
+
+func tiene_alguna_pista(nombres_pistas: Array) -> bool:
+	for nombre_pista: Variant in nombres_pistas:
+		if tiene_pista(str(nombre_pista)):
+			return true
+
+	return false
+
+func registrar_pista_final(nombre_pista: String) -> bool:
+	if nombre_pista.strip_edges().is_empty():
+		return false
+
+	if pistas_finales_usadas.has(nombre_pista):
+		return false
+
+	pistas_finales_usadas.append(nombre_pista)
+	return true
+
+func contar_pistas_finales_usadas() -> int:
+	return pistas_finales_usadas.size()
+
+func finalizar_el_precipicio(pistas_usadas: int) -> String:
+	if pistas_usadas >= 5:
+		final_el_precipicio = "positivo"
+	elif pistas_usadas >= 2:
+		final_el_precipicio = "intermedio"
+	else:
+		final_el_precipicio = "debil"
+
+	return final_el_precipicio
+
 func solicitar_tarea_jugador_2(task_id: String) -> void:
 	if task_id.strip_edges().is_empty():
 		return
+
+	if tareas_jugador_2_enviadas.has(task_id):
+		return
+
+	tareas_jugador_2_enviadas.append(task_id)
 
 	if multiplayer.has_multiplayer_peer() and multiplayer.is_server():
 		_recibir_tarea_jugador_2.rpc(task_id)

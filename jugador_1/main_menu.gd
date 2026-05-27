@@ -2,8 +2,6 @@ extends Control
 
 const PORT := 8910
 const MAX_PLAYERS := 2
-const DETECTIVE_SCENE := "res://jugador_1/player_move.tscn"
-const POLICIA_SCENE := "res://jugador_2/jugador_2_ui.tscn"
 const LANGUAGE_OPTIONS := [
 	{"key": "language.es", "code": "es"},
 	{"key": "language.en", "code": "en"},
@@ -13,6 +11,7 @@ const LANGUAGE_OPTIONS := [
 @onready var records_panel = $MenuScreen/RecordsPanel
 @onready var list_container = $MenuScreen/RecordsPanel/PanelBox/RecordsList
 @onready var help_panel = $MenuScreen/helpPanel
+@onready var help_text: Label = $MenuScreen/helpPanel/PanelBox/HelpText
 @onready var multiplayer_panel = $MenuScreen/MultiplayerPanel
 @onready var multiplayer_box = $MenuScreen/MultiplayerPanel/PanelBox
 @onready var detective_checkbox: CheckBox = $MenuScreen/MultiplayerPanel/PanelBox/CheckBoxDetective
@@ -58,6 +57,7 @@ func _ready():
 	_setup_language_options()
 	_build_multiplayer_controls()
 	_apply_language()
+	actualizar_texto_ayuda()
 	_connect_multiplayer_signals()
 	if not Global.idioma_actualizado.is_connected(_apply_language):
 		Global.idioma_actualizado.connect(_apply_language)
@@ -112,7 +112,7 @@ func _setup_language_options() -> void:
 func _apply_language() -> void:
 	$start_screen/TitleScreen.text = Global.t("title")
 	$start_screen/touchLabel.text = Global.t("click_to_play")
-	$MenuScreen/helpPanel/PanelBox/HelpText.text = Global.t("help_text")
+	actualizar_texto_ayuda()
 	$MenuScreen/SettingsPanel/PanelBox/title.text = Global.t("settings")
 	$MenuScreen/SettingsPanel/PanelBox/volumeLabel.text = Global.t("volume")
 	$MenuScreen/SettingsPanel/PanelBox/FullscreenToggle.text = Global.t("fullscreen")
@@ -217,14 +217,29 @@ func _connect_multiplayer_signals() -> void:
 
 func _on_help_button_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
-		help_panel.visible = true
-		var tween = create_tween()
-		tween.tween_property(help_panel, "modulate:a", 1.0, 0.3).set_trans(Tween.TRANS_SINE)
+		mostrar_ayuda()
 
 
 func _on_close_button_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
-		help_panel.visible = false
+		ocultar_ayuda()
+
+func mostrar_ayuda() -> void:
+	actualizar_texto_ayuda()
+	help_panel.visible = true
+	help_panel.modulate.a = 0.0
+	var tween = create_tween()
+	tween.tween_property(help_panel, "modulate:a", 1.0, 0.3).set_trans(Tween.TRANS_SINE)
+
+func ocultar_ayuda() -> void:
+	help_panel.visible = false
+
+func actualizar_texto_ayuda() -> void:
+	if help_text == null:
+		return
+
+	help_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	help_text.text = "Habla con los 20 NPC usando E o Enter.\nReúne pistas para desbloquear preguntas nuevas.\nAlgunas respuestas enviarán un minijuego al segundo jugador.\nCuando tengas suficiente información, busca a Rachel y usa las pistas clave para ayudarla."
 
 func _on_setting_button_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
@@ -496,10 +511,8 @@ func _roles_rejected(message: String) -> void:
 func _start_multiplayer_game(role: String) -> void:
 	Global.es_partida_multijugador = true
 	Global.rol_multijugador = role
-	if role == "detective":
-		get_tree().change_scene_to_file(DETECTIVE_SCENE)
-	else:
-		get_tree().change_scene_to_file(POLICIA_SCENE)
+	
+	get_tree().change_scene_to_file("res://intro.tscn")
 
 
 func _set_ready_enabled() -> void:

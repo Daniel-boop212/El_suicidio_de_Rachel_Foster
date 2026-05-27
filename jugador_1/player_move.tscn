@@ -1,20 +1,28 @@
 [gd_scene format=4 uid="uid://cov1epsr1av3y"]
 
 [ext_resource type="Script" uid="uid://cqy6oxif1v7jn" path="res://jugador_1/player_move.gd" id="1_rnfbq"]
-[ext_resource type="Texture2D" uid="uid://0w5s1aphhlav" path="res://jugador_1/CharacterModel/Character Model.png" id="1_tod0f"]
-[ext_resource type="Texture2D" uid="uid://cl8wqkai5gfhx" path="res://jugador_1/Tilesets/Grass.png" id="3_evkh1"]
-[ext_resource type="Texture2D" uid="uid://bmbbm3cbctybi" path="res://jugador_1/CharacterModel/Hairs.png" id="3_kq1da"]
-[ext_resource type="Texture2D" uid="uid://boqfkfpisoxiv" path="res://jugador_1/CharacterModel/Outfit6.png" id="4_j0owo"]
-[ext_resource type="Texture2D" uid="uid://ch4y0desh5eg4" path="res://jugador_1/Tilesets/path.png" id="4_lxhbb"]
-[ext_resource type="Texture2D" uid="uid://tcwubm02ktnh" path="res://jugador_1/Pixel Lands Village Demo/premade_buildings_demo.png" id="5_jlcv0"]
+[ext_resource type="Texture2D" uid="uid://8mwdevsg5524" path="res://jugador_1/CharacterModel/Character Model.png" id="1_tod0f"]
+[ext_resource type="Texture2D" uid="uid://68aq1a86w2pf" path="res://jugador_1/Tilesets/Grass.png" id="3_evkh1"]
+[ext_resource type="Texture2D" uid="uid://jm8c44m1wht8" path="res://jugador_1/CharacterModel/Hairs.png" id="3_kq1da"]
+[ext_resource type="Texture2D" uid="uid://dc5c5pvxtj2xs" path="res://jugador_1/CharacterModel/Outfit6.png" id="4_j0owo"]
+[ext_resource type="Texture2D" uid="uid://c8jjx5dw6yor1" path="res://jugador_1/Tilesets/path.png" id="4_lxhbb"]
+[ext_resource type="Texture2D" uid="uid://dfjfssg502bbv" path="res://jugador_1/Pixel Lands Village Demo/premade_buildings_demo.png" id="5_jlcv0"]
 [ext_resource type="Script" uid="uid://bqc43s885cxns" path="res://jugador_1/npc.gd" id="6_kq1da"]
 [ext_resource type="Script" uid="uid://cnbiwo73lme5c" path="res://jugador_1/dialogo.gd" id="8_kq1da"]
+[ext_resource type="Texture2D" uid="uid://brh2p7bigx2ln" path="res://jugador_1/CharacterModel/Rachel/Outfit5.png" id="10_1jc2r"]
 [ext_resource type="Texture2D" uid="uid://dd8a8cqk4bgug" path="res://jugador_1/menu/boton_inventario.png" id="10_6ttgn"]
 [ext_resource type="Script" uid="uid://dq5eb0fa45k28" path="res://jugador_1/inventario_ui.gd" id="10_cpa2r"]
 [ext_resource type="Script" uid="uid://c7d3dfwo0wkxl" path="res://jugador_1/canvas_layer.gd" id="10_hu85r"]
+[ext_resource type="Texture2D" uid="uid://c6wupxwr3auhj" path="res://jugador_1/CharacterModel/Rachel/Hair1.png" id="10_neov8"]
 [ext_resource type="Texture2D" uid="uid://8grtql7084cq" path="res://jugador_1/menu/boton_menu.png" id="11_ykxdj"]
-[ext_resource type="FontFile" uid="uid://wo5pdorxjlko" path="res://jugador_1/menu/varsity_regular.ttf" id="13_cdyr5"]
+[ext_resource type="FontFile" uid="uid://b0qxytofu2kgf" path="res://jugador_1/menu/varsity_regular.ttf" id="13_cdyr5"]
 [ext_resource type="Script" uid="uid://daj50lv8wbxvt" path="res://jugador_1/menu_ui.gd" id="14_cdyr5"]
+[ext_resource type="Texture2D" uid="uid://baci35jgtc75w" path="res://jugador_1/CharacterModel/Rachel/Hair.png" id="18_b3xeh"]
+[ext_resource type="Texture2D" uid="uid://dobxm4g3x4noa" path="res://jugador_1/CharacterModel/Rachel/Hair3.png" id="19_ym6o7"]
+[ext_resource type="Texture2D" uid="uid://c8iy48jfp1d1s" path="res://jugador_1/CharacterModel/Rachel/Hair7.png" id="20_0qf5e"]
+[ext_resource type="Texture2D" uid="uid://biir2r026g66j" path="res://jugador_1/CharacterModel/Rachel/Hair6.png" id="21_llu8u"]
+[ext_resource type="Texture2D" uid="uid://dc47cj0t8csi2" path="res://jugador_1/CharacterModel/Rachel/Hair5.png" id="22_8d3mu"]
+[ext_resource type="Texture2D" uid="uid://gfbwiwi7c6pr" path="res://jugador_1/CharacterModel/Rachel/Hair4.png" id="23_ym6o7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rnfbq"]
 atlas = ExtResource("1_tod0f")
@@ -2209,6 +2217,10 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -184.0
+offset_right = 2.0
+offset_bottom = -34.0
 grow_horizontal = 2
 grow_vertical = 0
 
@@ -2217,6 +2229,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 2.0
+offset_right = 1.0
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 horizontal_alignment = 1
@@ -2232,6 +2248,16 @@ dialogo = NodePath("../Dialogo")
 position = Vector2(153.34375, -234)
 scale = Vector2(3.093749, 3.035714)
 texture = SubResource("AtlasTexture_4eutj")
+
+[node name="Sprite2DC" type="Sprite2D" parent="NPC" unique_id=1792351689]
+position = Vector2(153.24997, -242)
+scale = Vector2(2.9218736, 2.6875)
+texture = ExtResource("10_neov8")
+
+[node name="Sprite2DR" type="Sprite2D" parent="NPC" unique_id=1624276490]
+position = Vector2(154, -237)
+scale = Vector2(3.3409088, 2.9687505)
+texture = ExtResource("10_1jc2r")
 
 [node name="Area2D" type="Area2D" parent="NPC" unique_id=1657120950]
 
@@ -2284,6 +2310,7 @@ horizontal_alignment = 1
 script = ExtResource("14_cdyr5")
 
 [node name="ContenedorPrincipal" type="Control" parent="MenuUI" unique_id=1024575430]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -2326,6 +2353,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -2.0
 offset_bottom = -4.6874695
+grow_horizontal = 2
+grow_vertical = 2
 text = "Continuar"
 
 [node name="ColorRect2" type="ColorRect" parent="MenuUI/ContenedorPrincipal/ColorRect" unique_id=2135113049]
@@ -2349,13 +2378,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -2.0
 offset_bottom = -4.6874695
+grow_horizontal = 2
+grow_vertical = 2
 text = "Salir"
 
 [node name="InventarioUI" type="CanvasLayer" parent="." unique_id=991354579]
-visible = false
 script = ExtResource("10_cpa2r")
 
 [node name="ContenedorPrincipal" type="Control" parent="InventarioUI" unique_id=1581427724]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -2635,6 +2666,16 @@ shape = SubResource("RectangleShape2D_mlgwv")
 position = Vector2(153.5, -236.5)
 shape = SubResource("RectangleShape2D_0tamx")
 
+[node name="Sprite2DR" type="Sprite2D" parent="NPC2" unique_id=762255346]
+position = Vector2(155.00002, -238.00002)
+scale = Vector2(3.4280305, 3.1718764)
+texture = ExtResource("10_1jc2r")
+
+[node name="Sprite2DC" type="Sprite2D" parent="NPC2" unique_id=1411808561]
+position = Vector2(153.24997, -242)
+scale = Vector2(2.9218736, 2.6875)
+texture = ExtResource("18_b3xeh")
+
 [node name="NPC3" type="Node2D" parent="." unique_id=632681342 node_paths=PackedStringArray("dialogo")]
 position = Vector2(0, -550)
 script = ExtResource("6_kq1da")
@@ -2656,6 +2697,16 @@ shape = SubResource("RectangleShape2D_mlgwv")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NPC3/StaticBody2D" unique_id=1082962292]
 position = Vector2(153.5, -236.5)
 shape = SubResource("RectangleShape2D_0tamx")
+
+[node name="Sprite2DR" type="Sprite2D" parent="NPC3" unique_id=2130593326]
+position = Vector2(154, -237)
+scale = Vector2(3.3409088, 2.9687505)
+texture = ExtResource("10_1jc2r")
+
+[node name="Sprite2DC" type="Sprite2D" parent="NPC3" unique_id=872045871]
+position = Vector2(153.24997, -242)
+scale = Vector2(2.9218736, 2.6875)
+texture = ExtResource("19_ym6o7")
 
 [node name="NPC4" type="Node2D" parent="." unique_id=1031632399 node_paths=PackedStringArray("dialogo")]
 position = Vector2(450, -550)
@@ -2679,6 +2730,16 @@ shape = SubResource("RectangleShape2D_mlgwv")
 position = Vector2(153.5, -236.5)
 shape = SubResource("RectangleShape2D_0tamx")
 
+[node name="Sprite2DR" type="Sprite2D" parent="NPC4" unique_id=943900849]
+position = Vector2(154, -237)
+scale = Vector2(3.3409088, 2.9687505)
+texture = ExtResource("10_1jc2r")
+
+[node name="Sprite2DC" type="Sprite2D" parent="NPC4" unique_id=747698931]
+position = Vector2(153.24997, -242)
+scale = Vector2(2.9218736, 2.6875)
+texture = ExtResource("20_0qf5e")
+
 [node name="NPC5" type="Node2D" parent="." unique_id=1338776884 node_paths=PackedStringArray("dialogo")]
 position = Vector2(900, -550)
 script = ExtResource("6_kq1da")
@@ -2700,6 +2761,16 @@ shape = SubResource("RectangleShape2D_mlgwv")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NPC5/StaticBody2D" unique_id=356574258]
 position = Vector2(153.5, -236.5)
 shape = SubResource("RectangleShape2D_0tamx")
+
+[node name="Sprite2DR" type="Sprite2D" parent="NPC5" unique_id=138169235]
+position = Vector2(154, -237)
+scale = Vector2(3.3409088, 2.9687505)
+texture = ExtResource("10_1jc2r")
+
+[node name="Sprite2DC" type="Sprite2D" parent="NPC5" unique_id=1804204883]
+position = Vector2(153.24997, -242)
+scale = Vector2(2.9218736, 2.6875)
+texture = ExtResource("21_llu8u")
 
 [node name="NPC6" type="Node2D" parent="." unique_id=458830905 node_paths=PackedStringArray("dialogo")]
 position = Vector2(-900, -220)
@@ -2723,6 +2794,16 @@ shape = SubResource("RectangleShape2D_mlgwv")
 position = Vector2(153.5, -236.5)
 shape = SubResource("RectangleShape2D_0tamx")
 
+[node name="Sprite2DR" type="Sprite2D" parent="NPC6" unique_id=136387442]
+position = Vector2(154, -237)
+scale = Vector2(3.3409088, 2.9687505)
+texture = ExtResource("10_1jc2r")
+
+[node name="Sprite2DC" type="Sprite2D" parent="NPC6" unique_id=474843128]
+position = Vector2(153.24997, -242)
+scale = Vector2(2.9218736, 2.6875)
+texture = ExtResource("18_b3xeh")
+
 [node name="NPC7" type="Node2D" parent="." unique_id=616110801 node_paths=PackedStringArray("dialogo")]
 position = Vector2(-450, -220)
 script = ExtResource("6_kq1da")
@@ -2744,6 +2825,16 @@ shape = SubResource("RectangleShape2D_mlgwv")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NPC7/StaticBody2D" unique_id=1495162185]
 position = Vector2(153.5, -236.5)
 shape = SubResource("RectangleShape2D_0tamx")
+
+[node name="Sprite2DR" type="Sprite2D" parent="NPC7" unique_id=634506421]
+position = Vector2(154, -237)
+scale = Vector2(3.3409088, 2.9687505)
+texture = ExtResource("10_1jc2r")
+
+[node name="Sprite2DC" type="Sprite2D" parent="NPC7" unique_id=1028918614]
+position = Vector2(153.24997, -242)
+scale = Vector2(2.9218736, 2.6875)
+texture = ExtResource("10_neov8")
 
 [node name="NPC8" type="Node2D" parent="." unique_id=382099684 node_paths=PackedStringArray("dialogo")]
 position = Vector2(0, -220)
@@ -2767,6 +2858,16 @@ shape = SubResource("RectangleShape2D_mlgwv")
 position = Vector2(153.5, -236.5)
 shape = SubResource("RectangleShape2D_0tamx")
 
+[node name="Sprite2DR" type="Sprite2D" parent="NPC8" unique_id=831460000]
+position = Vector2(154, -237)
+scale = Vector2(3.3409088, 2.9687505)
+texture = ExtResource("10_1jc2r")
+
+[node name="Sprite2DC" type="Sprite2D" parent="NPC8" unique_id=1546487990]
+position = Vector2(153.24997, -242)
+scale = Vector2(2.9218736, 2.6875)
+texture = ExtResource("21_llu8u")
+
 [node name="NPC9" type="Node2D" parent="." unique_id=695832608 node_paths=PackedStringArray("dialogo")]
 position = Vector2(450, -220)
 script = ExtResource("6_kq1da")
@@ -2788,6 +2889,16 @@ shape = SubResource("RectangleShape2D_mlgwv")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NPC9/StaticBody2D" unique_id=564529549]
 position = Vector2(153.5, -236.5)
 shape = SubResource("RectangleShape2D_0tamx")
+
+[node name="Sprite2DR" type="Sprite2D" parent="NPC9" unique_id=754422406]
+position = Vector2(154, -237)
+scale = Vector2(3.3409088, 2.9687505)
+texture = ExtResource("10_1jc2r")
+
+[node name="Sprite2DC" type="Sprite2D" parent="NPC9" unique_id=895805674]
+position = Vector2(153.24997, -242)
+scale = Vector2(2.9218736, 2.6875)
+texture = ExtResource("22_8d3mu")
 
 [node name="NPC10" type="Node2D" parent="." unique_id=1888485932 node_paths=PackedStringArray("dialogo")]
 position = Vector2(900, -220)
@@ -2811,6 +2922,16 @@ shape = SubResource("RectangleShape2D_mlgwv")
 position = Vector2(153.5, -236.5)
 shape = SubResource("RectangleShape2D_0tamx")
 
+[node name="Sprite2DR" type="Sprite2D" parent="NPC10" unique_id=1408715184]
+position = Vector2(154, -237)
+scale = Vector2(3.3409088, 2.9687505)
+texture = ExtResource("10_1jc2r")
+
+[node name="Sprite2DC" type="Sprite2D" parent="NPC10" unique_id=1072618996]
+position = Vector2(153.24997, -242)
+scale = Vector2(2.9218736, 2.6875)
+texture = ExtResource("19_ym6o7")
+
 [node name="NPC11" type="Node2D" parent="." unique_id=792032520 node_paths=PackedStringArray("dialogo")]
 position = Vector2(-900, 180)
 script = ExtResource("6_kq1da")
@@ -2832,6 +2953,16 @@ shape = SubResource("RectangleShape2D_mlgwv")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NPC11/StaticBody2D" unique_id=1853461561]
 position = Vector2(153.5, -236.5)
 shape = SubResource("RectangleShape2D_0tamx")
+
+[node name="Sprite2DR" type="Sprite2D" parent="NPC11" unique_id=1506034770]
+position = Vector2(154, -237)
+scale = Vector2(3.3409088, 2.9687505)
+texture = ExtResource("10_1jc2r")
+
+[node name="Sprite2DC" type="Sprite2D" parent="NPC11" unique_id=247246938]
+position = Vector2(153.24997, -242)
+scale = Vector2(2.9218736, 2.6875)
+texture = ExtResource("19_ym6o7")
 
 [node name="NPC12" type="Node2D" parent="." unique_id=16116949 node_paths=PackedStringArray("dialogo")]
 position = Vector2(-450, 180)
@@ -2855,6 +2986,16 @@ shape = SubResource("RectangleShape2D_mlgwv")
 position = Vector2(153.5, -236.5)
 shape = SubResource("RectangleShape2D_0tamx")
 
+[node name="Sprite2DR" type="Sprite2D" parent="NPC12" unique_id=1743776027]
+position = Vector2(154, -237)
+scale = Vector2(3.3409088, 2.9687505)
+texture = ExtResource("10_1jc2r")
+
+[node name="Sprite2DC" type="Sprite2D" parent="NPC12" unique_id=668492924]
+position = Vector2(153.24997, -242)
+scale = Vector2(2.9218736, 2.6875)
+texture = ExtResource("22_8d3mu")
+
 [node name="NPC13" type="Node2D" parent="." unique_id=488313543 node_paths=PackedStringArray("dialogo")]
 position = Vector2(0, 180)
 script = ExtResource("6_kq1da")
@@ -2876,6 +3017,16 @@ shape = SubResource("RectangleShape2D_mlgwv")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NPC13/StaticBody2D" unique_id=2024052323]
 position = Vector2(153.5, -236.5)
 shape = SubResource("RectangleShape2D_0tamx")
+
+[node name="Sprite2DR" type="Sprite2D" parent="NPC13" unique_id=370300280]
+position = Vector2(154, -237)
+scale = Vector2(3.3409088, 2.9687505)
+texture = ExtResource("10_1jc2r")
+
+[node name="Sprite2DC" type="Sprite2D" parent="NPC13" unique_id=152123672]
+position = Vector2(153.24997, -242)
+scale = Vector2(2.9218736, 2.6875)
+texture = ExtResource("20_0qf5e")
 
 [node name="NPC14" type="Node2D" parent="." unique_id=1104741237 node_paths=PackedStringArray("dialogo")]
 position = Vector2(450, 180)
@@ -2899,6 +3050,16 @@ shape = SubResource("RectangleShape2D_mlgwv")
 position = Vector2(153.5, -236.5)
 shape = SubResource("RectangleShape2D_0tamx")
 
+[node name="Sprite2DR" type="Sprite2D" parent="NPC14" unique_id=2143220508]
+position = Vector2(154, -237)
+scale = Vector2(3.3409088, 2.9687505)
+texture = ExtResource("10_1jc2r")
+
+[node name="Sprite2DC" type="Sprite2D" parent="NPC14" unique_id=2054368609]
+position = Vector2(153.24997, -242)
+scale = Vector2(2.9218736, 2.6875)
+texture = ExtResource("10_neov8")
+
 [node name="NPC15" type="Node2D" parent="." unique_id=1525003786 node_paths=PackedStringArray("dialogo")]
 position = Vector2(900, 180)
 script = ExtResource("6_kq1da")
@@ -2920,6 +3081,16 @@ shape = SubResource("RectangleShape2D_mlgwv")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NPC15/StaticBody2D" unique_id=408363071]
 position = Vector2(153.5, -236.5)
 shape = SubResource("RectangleShape2D_0tamx")
+
+[node name="Sprite2DR" type="Sprite2D" parent="NPC15" unique_id=101649935]
+position = Vector2(154, -237)
+scale = Vector2(3.3409088, 2.9687505)
+texture = ExtResource("10_1jc2r")
+
+[node name="Sprite2DC" type="Sprite2D" parent="NPC15" unique_id=198054604]
+position = Vector2(153.24997, -242)
+scale = Vector2(2.9218736, 2.6875)
+texture = ExtResource("18_b3xeh")
 
 [node name="NPC16" type="Node2D" parent="." unique_id=484124993 node_paths=PackedStringArray("dialogo")]
 position = Vector2(-900, 420)
@@ -2943,6 +3114,16 @@ shape = SubResource("RectangleShape2D_mlgwv")
 position = Vector2(153.5, -236.5)
 shape = SubResource("RectangleShape2D_0tamx")
 
+[node name="Sprite2DR" type="Sprite2D" parent="NPC16" unique_id=545897019]
+position = Vector2(154, -237)
+scale = Vector2(3.3409088, 2.9687505)
+texture = ExtResource("10_1jc2r")
+
+[node name="Sprite2DC" type="Sprite2D" parent="NPC16" unique_id=343643727]
+position = Vector2(153.24997, -242)
+scale = Vector2(2.9218736, 2.6875)
+texture = ExtResource("21_llu8u")
+
 [node name="NPC17" type="Node2D" parent="." unique_id=1726870312 node_paths=PackedStringArray("dialogo")]
 position = Vector2(-450, 420)
 script = ExtResource("6_kq1da")
@@ -2964,6 +3145,16 @@ shape = SubResource("RectangleShape2D_mlgwv")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NPC17/StaticBody2D" unique_id=384885783]
 position = Vector2(153.5, -236.5)
 shape = SubResource("RectangleShape2D_0tamx")
+
+[node name="Sprite2DR" type="Sprite2D" parent="NPC17" unique_id=1633343538]
+position = Vector2(154, -237)
+scale = Vector2(3.3409088, 2.9687505)
+texture = ExtResource("10_1jc2r")
+
+[node name="Sprite2DC" type="Sprite2D" parent="NPC17" unique_id=745033793]
+position = Vector2(153.24997, -242)
+scale = Vector2(2.9218736, 2.6875)
+texture = ExtResource("18_b3xeh")
 
 [node name="NPC18" type="Node2D" parent="." unique_id=1062597476 node_paths=PackedStringArray("dialogo")]
 position = Vector2(0, 420)
@@ -2987,6 +3178,16 @@ shape = SubResource("RectangleShape2D_mlgwv")
 position = Vector2(153.5, -236.5)
 shape = SubResource("RectangleShape2D_0tamx")
 
+[node name="Sprite2DR" type="Sprite2D" parent="NPC18" unique_id=1506528948]
+position = Vector2(154, -237)
+scale = Vector2(3.3409088, 2.9687505)
+texture = ExtResource("10_1jc2r")
+
+[node name="Sprite2DC" type="Sprite2D" parent="NPC18" unique_id=609520449]
+position = Vector2(153.24997, -242)
+scale = Vector2(2.9218736, 2.6875)
+texture = ExtResource("23_ym6o7")
+
 [node name="NPC19" type="Node2D" parent="." unique_id=2118523661 node_paths=PackedStringArray("dialogo")]
 position = Vector2(450, 420)
 script = ExtResource("6_kq1da")
@@ -3009,6 +3210,16 @@ shape = SubResource("RectangleShape2D_mlgwv")
 position = Vector2(153.5, -236.5)
 shape = SubResource("RectangleShape2D_0tamx")
 
+[node name="Sprite2DR" type="Sprite2D" parent="NPC19" unique_id=1338287124]
+position = Vector2(154, -237)
+scale = Vector2(3.3409088, 2.9687505)
+texture = ExtResource("10_1jc2r")
+
+[node name="Sprite2DC" type="Sprite2D" parent="NPC19" unique_id=1487418043]
+position = Vector2(153.24997, -242)
+scale = Vector2(2.9218736, 2.6875)
+texture = ExtResource("19_ym6o7")
+
 [node name="NPC20" type="Node2D" parent="." unique_id=983791182 node_paths=PackedStringArray("dialogo")]
 position = Vector2(900, 420)
 script = ExtResource("6_kq1da")
@@ -3030,6 +3241,16 @@ shape = SubResource("RectangleShape2D_mlgwv")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NPC20/StaticBody2D" unique_id=854164839]
 position = Vector2(153.5, -236.5)
 shape = SubResource("RectangleShape2D_0tamx")
+
+[node name="Sprite2DR" type="Sprite2D" parent="NPC20" unique_id=1989943967]
+position = Vector2(154, -237)
+scale = Vector2(3.3409088, 2.9687505)
+texture = ExtResource("10_1jc2r")
+
+[node name="Sprite2DC" type="Sprite2D" parent="NPC20" unique_id=93278698]
+position = Vector2(153.24997, -242)
+scale = Vector2(2.9218736, 2.6875)
+texture = ExtResource("10_neov8")
 
 [connection signal="timeout" from="CanvasLayer/Timer" to="CanvasLayer" method="_on_timer_timeout"]
 [connection signal="pressed" from="MenuUI/ContenedorPrincipal/ColorRect/ColorRect/Button" to="MenuUI" method="_on_button_pressed"]

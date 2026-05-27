@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Global="*uid://ccaqruml8ogwg"
-SaveManager="*uid://dy05ylv5lceyb"
+Global="*res://Global.gd"
+SaveManager="*res://SaveManager.gd"
 
 [dotnet]
 

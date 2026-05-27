@@ -1,7 +1,12 @@
 extends Node2D
 class_name NpcConversador
 
+const DialogosElPrecipicio = preload("res://jugador_1/dialogos_el_precipicio.gd")
+
 @export var dialogo: Node
+@export var npc_id: int = 0
+@export var mostrar_opciones_bloqueadas: bool = true
+
 @export var nombre_de_la_pista: String = "Juan mando un mensaje a las 11PM"
 @export var tarea_jugador_2: String = "toxicidad"
 @export var texto_dialogop: String = "Hola detective, encontre algo..."
@@ -12,12 +17,16 @@ class_name NpcConversador
 var player_near: bool = false
 var esperando_opcion: bool = false
 var indicador_interaccion: Label
+var npc_id_actual: int = 0
+var dialogo_actual: Dictionary = {}
+var opciones_actuales: Array[Dictionary] = []
 
 const TECLA_INTERACCION: Key = KEY_E
 const OPCION_PREGUNTAR: String = "Preguntar por la pista"
 const OPCION_DESPEDIRSE: String = "Despedirse"
 
 func _ready() -> void:
+	npc_id_actual = _resolver_npc_id()
 	area.body_entered.connect(_on_body_entered)
 	area.body_exited.connect(_on_body_exited)
 	_crear_indicador_interaccion()
@@ -25,6 +34,21 @@ func _ready() -> void:
 	_configurar_cuadro_dialogo()
 	if not Global.idioma_actualizado.is_connected(_actualizar_textos):
 		Global.idioma_actualizado.connect(_actualizar_textos)
+
+func _resolver_npc_id() -> int:
+	if npc_id > 0:
+		return npc_id
+
+	var nombre_nodo: String = String(name)
+	if nombre_nodo == "NPC":
+		return 1
+
+	if nombre_nodo.begins_with("NPC"):
+		var numero: int = nombre_nodo.substr(3).to_int()
+		if numero > 0:
+			return numero
+
+	return 0
 
 func _crear_indicador_interaccion() -> void:
 	indicador_interaccion = Label.new()
@@ -82,50 +106,202 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _dialogo_esta_abierto():
 		return
 
+	if _es_evento_interaccion(event):
+		abrir_dialogo_interactivo()
+		get_viewport().set_input_as_handled()
+
+func _es_evento_interaccion(event: InputEvent) -> bool:
+	if event.is_action_pressed("ui_accept"):
+		return true
+
 	if event is InputEventKey:
 		var evento_tecla: InputEventKey = event as InputEventKey
-		if evento_tecla != null and evento_tecla.pressed and not evento_tecla.echo and evento_tecla.keycode == TECLA_INTERACCION:
-			abrir_dialogo_interactivo()
-			get_viewport().set_input_as_handled()
+		return evento_tecla.pressed and not evento_tecla.echo and evento_tecla.keycode == TECLA_INTERACCION
+
+	return false
 
 func abrir_dialogo_interactivo() -> void:
-	if dialogo == null:
+	if dialogo == null or not dialogo.has_method("mostrar_dialogo"):
 		return
 
-	if not dialogo.has_method("mostrar_dialogo"):
+	dialogo_actual = DialogosElPrecipicio.obtener_npc(npc_id_actual)
+	if dialogo_actual.is_empty():
+		abrir_dialogo_legacy()
 		return
 
+	if npc_id_actual == 20 and dialogo_actual.has("tarea_inicio"):
+		_solicitar_tarea_unica(str(dialogo_actual["tarea_inicio"]))
+
+	_mostrar_menu_dialogo()
+
+func abrir_dialogo_legacy() -> void:
 	esperando_opcion = true
-	var opciones: Array[String] = [Global.t("ask_question"), Global.t("goodbye")]
-	dialogo.call("mostrar_dialogo", Global.t("what_ask"), opciones)
+	opciones_actuales = [
+		{"texto": Global.t("ask_question"), "legacy": OPCION_PREGUNTAR},
+		{"texto": Global.t("goodbye"), "legacy": OPCION_DESPEDIRSE}
+	]
+	dialogo.call("mostrar_dialogo", Global.t("what_ask"), [Global.t("ask_question"), Global.t("goodbye")])
 
-func _on_dialogo_opcion_elegida(_indice: int, texto_opcion: String) -> void:
+func _mostrar_menu_dialogo() -> void:
+	esperando_opcion = true
+	opciones_actuales.clear()
+
+	var opciones_texto: Array[String] = []
+	var opciones_data: Array = dialogo_actual.get("opciones", [])
+	for opcion_data: Variant in opciones_data:
+		if not opcion_data is Dictionary:
+			continue
+
+		var opcion: Dictionary = opcion_data
+		var bloqueada: bool = not _opcion_disponible(opcion)
+		if bloqueada and not mostrar_opciones_bloqueadas:
+			continue
+
+		opciones_actuales.append({"opcion": opcion, "bloqueada": bloqueada})
+
+		var texto_opcion: String = str(opcion.get("texto", "Continuar"))
+		if bloqueada:
+			texto_opcion = "[Bloqueada] " + texto_opcion
+		opciones_texto.append(texto_opcion)
+
+	if npc_id_actual == 20:
+		opciones_actuales.append({"opcion": {"texto": "Cerrar caso con Rachel", "finalizar": true}, "bloqueada": false})
+		opciones_texto.append("Cerrar caso con Rachel")
+
+	var encabezado: String = "%s (%s)\n%s\n\n¿Qué quieres preguntar?" % [
+		str(dialogo_actual.get("nombre", "NPC")),
+		str(dialogo_actual.get("rol", "Testigo")),
+		str(dialogo_actual.get("intro", ""))
+	]
+	dialogo.call("mostrar_dialogo", encabezado, opciones_texto)
+
+func _on_dialogo_opcion_elegida(indice: int, _texto_opcion: String) -> void:
 	if not esperando_opcion:
 		return
 
 	esperando_opcion = false
 
-	if texto_opcion == Global.t("ask_question") or texto_opcion == OPCION_PREGUNTAR:
+	if indice < 0 or indice >= opciones_actuales.size():
+		return
+
+	var seleccion: Dictionary = opciones_actuales[indice]
+	var opcion: Dictionary = seleccion.get("opcion", {})
+
+	if opcion.has("legacy"):
+		_responder_legacy(str(opcion["legacy"]))
+		return
+
+	if bool(seleccion.get("bloqueada", false)):
+		_mostrar_texto("Todavía falta información para preguntar eso.\n\nNecesitas: " + _texto_requisito(opcion))
+		return
+
+	if bool(opcion.get("finalizar", false)):
+		_mostrar_final_rachel()
+		return
+
+	_responder_opcion(opcion)
+
+func _responder_opcion(opcion: Dictionary) -> void:
+	var respuesta: String = str(opcion.get("respuesta", "No hay respuesta registrada."))
+	var pista: String = str(opcion.get("pista", ""))
+	var pista_final: String = str(opcion.get("pista_final", ""))
+	var tarea: String = str(opcion.get("tarea", ""))
+	var extras: Array[String] = []
+
+	if not pista.is_empty():
+		var pista_nueva: bool = Global.add_pista(pista)
+		if pista_nueva:
+			extras.append("Pista obtenida: " + pista)
+		else:
+			extras.append("Pista ya registrada: " + pista)
+
+	if not pista_final.is_empty():
+		Global.registrar_pista_final(pista_final)
+		extras.append("Usaste una pista clave para hablar con Rachel.")
+
+	if not tarea.is_empty():
+		_solicitar_tarea_unica(tarea)
+
+	if opcion.has("desbloquea"):
+		extras.append(str(opcion["desbloquea"]))
+
+	if not extras.is_empty():
+		respuesta += "\n\n" + _unir_textos(extras, "\n")
+
+	_mostrar_texto(respuesta)
+
+func _mostrar_final_rachel() -> void:
+	var pistas_usadas: int = Global.contar_pistas_finales_usadas()
+	var resultado: String = Global.finalizar_el_precipicio(pistas_usadas)
+	var texto_final: String = ""
+
+	if resultado == "positivo":
+		texto_final = "FINAL A - El paso atrás\n\nRachel da un paso atrás del borde. Cae de rodillas. El detective se acerca y se sienta a su lado.\n\nRachel recibió ayuda. Su historia continúa."
+	elif resultado == "intermedio":
+		texto_final = "FINAL B - La duda\n\nRachel no salta, pero tampoco retrocede. Se sienta en el borde.\n\nRachel fue llevada a recibir apoyo. El camino es largo, pero comenzó."
+	else:
+		texto_final = "FINAL C - Sin palabras\n\nNo tienes suficiente información para llegar a Rachel de verdad. Aun así, decides quedarte y aprender a escuchar.\n\nLlegar tarde no siempre significa llegar demasiado tarde, pero casi."
+
+	texto_final += "\n\nPistas clave usadas: %d" % pistas_usadas
+	_mostrar_texto(texto_final)
+
+func _opcion_disponible(opcion: Dictionary) -> bool:
+	if opcion.has("requiere"):
+		return Global.tiene_pista(str(opcion["requiere"]))
+
+	if opcion.has("requiere_alguna"):
+		var requisitos: Array = opcion["requiere_alguna"]
+		return Global.tiene_alguna_pista(requisitos)
+
+	return true
+
+func _texto_requisito(opcion: Dictionary) -> String:
+	if opcion.has("requiere"):
+		return str(opcion["requiere"])
+
+	if opcion.has("requiere_alguna"):
+		var partes: Array[String] = []
+		var requisitos: Array = opcion["requiere_alguna"]
+		for requisito: Variant in requisitos:
+			partes.append(str(requisito))
+		return "una de estas pistas: " + _unir_textos(partes, ", ")
+
+	return "una pista relacionada"
+
+func _solicitar_tarea_unica(task_id: String) -> void:
+	Global.solicitar_tarea_jugador_2(task_id)
+
+func _mostrar_texto(texto: String) -> void:
+	if dialogo != null and dialogo.has_method("mostrar_dialogo"):
+		dialogo.call("mostrar_dialogo", texto)
+
+func _unir_textos(textos: Array[String], separador: String) -> String:
+	var resultado: String = ""
+	for indice: int in range(textos.size()):
+		if indice > 0:
+			resultado += separador
+		resultado += textos[indice]
+
+	return resultado
+
+func _responder_legacy(texto_opcion: String) -> void:
+	if texto_opcion == OPCION_PREGUNTAR:
 		_responder_con_pista()
 		return
 
-	if texto_opcion == Global.t("goodbye") or texto_opcion == OPCION_DESPEDIRSE:
-		if dialogo != null and dialogo.has_method("mostrar_dialogo"):
-			dialogo.call("mostrar_dialogo", Global.t("talk_later"))
+	if texto_opcion == OPCION_DESPEDIRSE:
+		_mostrar_texto(Global.t("talk_later"))
 
 func _responder_con_pista() -> void:
-	if dialogo == null or not dialogo.has_method("mostrar_dialogo"):
-		return
-
 	if Global.tiene_celular:
 		Global.add_pista(nombre_de_la_pista)
-		Global.solicitar_tarea_jugador_2(tarea_jugador_2)
+		_solicitar_tarea_unica(tarea_jugador_2)
 		Global.tiene_celular = false
 		Global.paso_actual = 1
-		dialogo.call("mostrar_dialogo", Global.traducir_texto_directo(texto_dialogop))
+		_mostrar_texto(Global.traducir_texto_directo(texto_dialogop))
 	else:
 		Global.paso_actual = 1
-		dialogo.call("mostrar_dialogo", Global.traducir_texto_directo(texto_dialogo_antes))
+		_mostrar_texto(Global.traducir_texto_directo(texto_dialogo_antes))
 
 func _dialogo_esta_abierto() -> bool:
 	if dialogo == null:

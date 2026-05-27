@@ -46,10 +46,24 @@ func _resolver_label() -> Label:
 func _crear_contenedor_opciones() -> void:
 	opciones_container = VBoxContainer.new()
 	opciones_container.name = "Opciones"
-	opciones_container.position = Vector2(16.0, 70.0)
-	opciones_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
+	# Centrado en pantalla
+	opciones_container.anchor_left = 0.5
+	opciones_container.anchor_top = 0.5
+	opciones_container.anchor_right = 0.5
+	opciones_container.anchor_bottom = 0.5
+
+	# Tamaño del contenedor
+	opciones_container.offset_left = -150
+	opciones_container.offset_top = -100
+	opciones_container.offset_right = 150
+	opciones_container.offset_bottom = 100
+
+	opciones_container.alignment = BoxContainer.ALIGNMENT_CENTER
 	opciones_container.visible = false
-	panel.add_child(opciones_container)
+
+	# IMPORTANTE:
+	add_child(opciones_container)
 
 func mostrar_dialogo(texto: String, opciones: Array[String] = []) -> void:
 	if panel == null or label == null:
@@ -82,7 +96,7 @@ func _process(_delta: float) -> void:
 	if panel == null:
 		return
 
-	if panel.visible and puede_cerrar and opciones_actuales.is_empty() and Input.is_action_just_pressed("ui_accept"):
+	if panel.visible and puede_cerrar and Input.is_action_just_pressed("ui_accept"):
 		ocultar_dialogo()
 
 func _refrescar_opciones() -> void:
@@ -109,5 +123,6 @@ func _limpiar_opciones() -> void:
 		child.queue_free()
 
 func _on_boton_opcion_presionado(indice: int, texto_opcion: String) -> void:
-	emit_signal("opcion_elegida", indice, texto_opcion)
+	opciones_actuales.clear()
 	ocultar_dialogo()
+	emit_signal("opcion_elegida", indice, texto_opcion)
