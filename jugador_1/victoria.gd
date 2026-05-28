@@ -58,10 +58,10 @@ func _on_saved_button_gui_input(event: InputEvent) -> void:
 			# Podrías hacer que el LineEdit parpadee en rojo aquí
 			return
 	
-		var tiempo_final = 0
+		var tiempo_usado = 900 - Global.tiempo_restante
 	
 		# Usamos tu SaveManager para agregar el record
-		SaveManager.agregar_record(nombre, tiempo_final)
+		SaveManager.agregar_record(nombre, tiempo_usado)
 	
 		# Feedback visual y cerrar
 		_animar_exito_y_cerrar()

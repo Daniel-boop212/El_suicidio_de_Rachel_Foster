@@ -1,22 +1,22 @@
 [gd_scene format=3 uid="uid://b78fx510kw5c8"]
 
 [ext_resource type="Script" uid="uid://dhx5tmb8r8yt" path="res://jugador_1/main_menu.gd" id="1_qe12f"]
-[ext_resource type="Texture2D" uid="uid://b84dxhi3bqiw0" path="res://jugador_1/menu/fondo.png" id="2_7ex1f"]
+[ext_resource type="Texture2D" uid="uid://cm4cjjarsn7nt" path="res://jugador_1/menu/fondo.png" id="2_7ex1f"]
 [ext_resource type="Texture2D" uid="uid://wgr4xxfdwngq" path="res://jugador_1/menu/fondo menu.png" id="2_dtmra"]
-[ext_resource type="FontFile" uid="uid://wo5pdorxjlko" path="res://jugador_1/menu/varsity_regular.ttf" id="3_8qtwp"]
+[ext_resource type="FontFile" uid="uid://b0qxytofu2kgf" path="res://jugador_1/menu/varsity_regular.ttf" id="3_8qtwp"]
 [ext_resource type="Texture2D" uid="uid://c7ko1d17rr2x6" path="res://jugador_1/menu/sombra.png" id="3_a0l4u"]
 [ext_resource type="Texture2D" uid="uid://bil558pp2ga28" path="res://jugador_1/menu/help_button.png" id="5_3oum5"]
-[ext_resource type="Texture2D" uid="uid://bpf8agd4yi4uy" path="res://jugador_1/menu/boton salir.png" id="7_0o4t1"]
+[ext_resource type="Texture2D" uid="uid://dktitx4plwu14" path="res://jugador_1/menu/boton salir.png" id="7_0o4t1"]
 [ext_resource type="Texture2D" uid="uid://7ix7jaqvx24y" path="res://jugador_1/menu/settings_button.png" id="8_70sx0"]
 [ext_resource type="Texture2D" uid="uid://dfn5clqwwd0r4" path="res://jugador_1/menu/records_button.png" id="9_7ex1f"]
 [ext_resource type="Texture2D" uid="uid://bdb5qbi51x4p1" path="res://jugador_1/menu/exit_button.png" id="10_a0l4u"]
 [ext_resource type="Texture2D" uid="uid://b2i61mb3mdkxf" path="res://jugador_1/menu/multiplayer_button.png" id="11_3oum5"]
 [ext_resource type="Texture2D" uid="uid://c5p5bcfnbw0ap" path="res://jugador_1/menu/credits_button.png" id="12_70sx0"]
 [ext_resource type="AudioStream" uid="uid://d1mgmok45vktm" path="res://music/audio fondo.mp3" id="13_7ex1f"]
-[ext_resource type="Texture2D" uid="uid://0w5s1aphhlav" path="res://jugador_1/CharacterModel/Character Model.png" id="13_841vg"]
+[ext_resource type="Texture2D" uid="uid://8mwdevsg5524" path="res://jugador_1/CharacterModel/Character Model.png" id="13_841vg"]
 [ext_resource type="Texture2D" uid="uid://epsnyda75ig6" path="res://jugador_1/menu/boton_limpiar.png" id="13_s1cvw"]
-[ext_resource type="Texture2D" uid="uid://bmbbm3cbctybi" path="res://jugador_1/CharacterModel/Hairs.png" id="14_s1cvw"]
-[ext_resource type="Texture2D" uid="uid://boqfkfpisoxiv" path="res://jugador_1/CharacterModel/Outfit6.png" id="15_only2"]
+[ext_resource type="Texture2D" uid="uid://jm8c44m1wht8" path="res://jugador_1/CharacterModel/Hairs.png" id="14_s1cvw"]
+[ext_resource type="Texture2D" uid="uid://dc5c5pvxtj2xs" path="res://jugador_1/CharacterModel/Outfit6.png" id="15_only2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7ex1f"]
 font = ExtResource("3_8qtwp")
@@ -355,7 +355,6 @@ texture = ExtResource("11_3oum5")
 expand_mode = 1
 
 [node name="helpPanel" type="Control" parent="MenuScreen" unique_id=875982332]
-visible = false
 z_index = 1
 anchors_preset = 0
 offset_left = -16.0
@@ -377,12 +376,12 @@ offset_bottom = 576.0
 
 [node name="HelpText" type="Label" parent="MenuScreen/helpPanel/PanelBox" unique_id=130849497]
 layout_mode = 0
-offset_right = 965.0
-offset_bottom = 422.0
-text = "Usa el mouse para investigar pistas.
-Haz clic en objetos sospechosos.
-Sigue el rastro digital para resolver el caso.
-"
+offset_right = 1062.0
+offset_bottom = 146.0
+text = "Comuniquense entre si para resolver el caso y hablen con todos los personajes 
+posibles para  hallar pistas .
+no podran resolver el caso si ambos jugadores no ayudan.
+sean rapidos el tiempo corre rapido."
 label_settings = SubResource("LabelSettings_j5v2v")
 
 [node name="CloseButton" type="Control" parent="MenuScreen/helpPanel/PanelBox" unique_id=1983698222]
@@ -398,6 +397,30 @@ offset_right = 961.0
 offset_bottom = 482.0
 texture = ExtResource("7_0o4t1")
 expand_mode = 1
+
+[node name="ButtonF1" type="Button" parent="MenuScreen/helpPanel/PanelBox" unique_id=271359017]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 410.0
+offset_right = 185.0
+offset_bottom = 457.0
+text = "FINAL 1"
+
+[node name="ButtonF2" type="Button" parent="MenuScreen/helpPanel/PanelBox" unique_id=1001876839]
+layout_mode = 0
+offset_left = 196.0
+offset_top = 407.0
+offset_right = 361.0
+offset_bottom = 457.0
+text = "FINAL 2"
+
+[node name="ButtonF3" type="Button" parent="MenuScreen/helpPanel/PanelBox" unique_id=1272927106]
+layout_mode = 0
+offset_left = 376.0
+offset_top = 405.0
+offset_right = 541.0
+offset_bottom = 457.0
+text = "FINAL 3"
 
 [node name="SettingsPanel" type="Control" parent="MenuScreen" unique_id=884943731]
 visible = false
@@ -757,6 +780,7 @@ scale = Vector2(3.2187505, 3.25)
 sprite_frames = SubResource("SpriteFrames_8d1by")
 
 [node name="creditosPanel" type="Control" parent="MenuScreen" unique_id=1151132188]
+visible = false
 z_index = 1
 anchors_preset = 0
 offset_left = -16.0
@@ -808,6 +832,7 @@ expand_mode = 1
 stream = ExtResource("13_7ex1f")
 pitch_scale = 1.02
 autoplay = true
+parameters/looping = true
 
 [connection signal="gui_input" from="start_screen" to="." method="_on_start_screen_gui_input"]
 [connection signal="gui_input" from="MenuScreen/helpButton" to="." method="_on_help_button_gui_input"]
@@ -816,6 +841,9 @@ autoplay = true
 [connection signal="gui_input" from="MenuScreen/settingButton" to="." method="_on_setting_button_gui_input"]
 [connection signal="gui_input" from="MenuScreen/multiplayerButton" to="." method="_on_multiplayer_button_gui_input"]
 [connection signal="gui_input" from="MenuScreen/helpPanel/PanelBox/CloseButton" to="." method="_on_close_button_gui_input"]
+[connection signal="pressed" from="MenuScreen/helpPanel/PanelBox/ButtonF1" to="." method="_on_button_f_1_pressed"]
+[connection signal="pressed" from="MenuScreen/helpPanel/PanelBox/ButtonF2" to="." method="_on_button_f_2_pressed"]
+[connection signal="pressed" from="MenuScreen/helpPanel/PanelBox/ButtonF3" to="." method="_on_button_f_3_pressed"]
 [connection signal="gui_input" from="MenuScreen/SettingsPanel/PanelBox/CloseSettingsButton" to="." method="_on_close_settings_button_gui_input"]
 [connection signal="value_changed" from="MenuScreen/SettingsPanel/PanelBox/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
 [connection signal="toggled" from="MenuScreen/SettingsPanel/PanelBox/FullscreenToggle" to="." method="_on_fullscreen_toggle_toggled"]

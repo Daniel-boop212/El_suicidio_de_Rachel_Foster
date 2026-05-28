@@ -52,6 +52,7 @@ var camera_status: Label = null
 var ultima_captura: ImageTexture = null
 
 func _ready() -> void:
+	Global.tarea_jugador_2_solicitada.connect(trigger_task)
 	_build_interface()
 	_show_waiting_desktop()
 	_add_log(Global.t("system_ready"))
@@ -61,7 +62,6 @@ func _ready() -> void:
 		Global.captura_jugador_1_actualizada.connect(_on_captura_jugador_1_actualizada)
 	if not Global.idioma_actualizado.is_connected(_on_idioma_actualizado):
 		Global.idioma_actualizado.connect(_on_idioma_actualizado)
-
 
 func trigger_task(task_id: String) -> void:
 	if not MINIGAMES.has(task_id):

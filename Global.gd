@@ -449,6 +449,9 @@ var idioma_juego := "es"
 var tareas_jugador_2_enviadas: Array[String] = []
 var pistas_finales_usadas: Array[String] = []
 var final_el_precipicio := ""
+var final_actual := "positivo"
+var tiempo_restante := 0
+var tiempo := 15
 
 func set_idioma_juego(idioma: String) -> void:
 	if not TRADUCCIONES.has(idioma):
@@ -558,12 +561,19 @@ func solicitar_tarea_jugador_2(task_id: String) -> void:
 		return
 
 	if tareas_jugador_2_enviadas.has(task_id):
+		print("La tarea ya fue enviada:", task_id)
 		return
 
 	tareas_jugador_2_enviadas.append(task_id)
 
-	if multiplayer.has_multiplayer_peer() and multiplayer.is_server():
-		_recibir_tarea_jugador_2.rpc(task_id)
+	print("ENVIANDO TAREA:", task_id)
+
+	# MULTIJUGADOR
+	if multiplayer.has_multiplayer_peer():
+		if multiplayer.is_server():
+			_recibir_tarea_jugador_2.rpc(task_id)
+
+	# LOCAL
 	else:
 		tarea_jugador_2_solicitada.emit(task_id)
 
@@ -585,6 +595,8 @@ func _recibir_resultado_jugador_2(task_id: String, resultado: bool, recompensa: 
 	_aplicar_resultado_jugador_2(task_id, resultado, recompensa)
 
 func _aplicar_resultado_jugador_2(task_id: String, resultado: bool, recompensa: int) -> void:
+	if tareas_jugador_2_enviadas.has(task_id):
+		tareas_jugador_2_enviadas.erase(task_id)
 	tarea_jugador_2_completada.emit(task_id, resultado, recompensa)
 
 func puede_acusar_a_juan() -> bool:

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bvrxxx0c2gvxu" path="res://intro.gd" id="1_s2ta7"]
 [ext_resource type="FontFile" uid="uid://b0qxytofu2kgf" path="res://jugador_1/menu/varsity_regular.ttf" id="2_ayt76"]
+[ext_resource type="AudioStream" uid="uid://6irnbjx4p3m8" path="res://music/escenas.mp3" id="3_7a8ye"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_s2ta7"]
 font = ExtResource("2_ayt76")
@@ -39,7 +40,7 @@ offset_bottom = 90.0
 label_settings = SubResource("LabelSettings_s2ta7")
 
 [node name="Timer" type="Timer" parent="." unique_id=715691812]
-wait_time = 0.051000000000000004
+wait_time = 0.051
 
 [node name="Fade" type="ColorRect" parent="." unique_id=816124538]
 layout_mode = 0
@@ -47,6 +48,9 @@ offset_right = 1151.0
 offset_bottom = 645.0
 color = Color(0, 0, 0, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1760997444]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=380336082]
+stream = ExtResource("3_7a8ye")
+autoplay = true
+parameters/looping = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,17 +1,14 @@
 [gd_scene format=3 uid="uid://dayv6fljd1aqc"]
 
 [ext_resource type="Script" uid="uid://vbnxno4paxaw" path="res://jugador_1/victoria.gd" id="1_gvs5y"]
-[ext_resource type="Texture2D" uid="uid://bg82kv0iopdmh" path="res://jugador_1/victoria/victoria.png" id="1_qpjob"]
-[ext_resource type="FontFile" uid="uid://cf1rfvbguwauf" path="res://jugador_1/menu/varsity_regular.ttf" id="2_xtg27"]
+[ext_resource type="Texture2D" uid="uid://wgr4xxfdwngq" path="res://jugador_1/menu/fondo menu.png" id="2_pf8c1"]
+[ext_resource type="FontFile" uid="uid://b0qxytofu2kgf" path="res://jugador_1/menu/varsity_regular.ttf" id="2_xtg27"]
 [ext_resource type="Script" uid="uid://cggc8fdqrgs42" path="res://jugador_1/lobby_button.gd" id="3_pad2k"]
-[ext_resource type="Texture2D" uid="uid://bj0japg0bckkq" path="res://jugador_1/victoria/boton inicio.png" id="4_bl21q"]
-[ext_resource type="Texture2D" uid="uid://covpxftkeqna6" path="res://jugador_1/victoria/boton guardar record.png" id="6_67kmo"]
-[ext_resource type="Texture2D" uid="uid://bpf8agd4yi4uy" path="res://jugador_1/menu/boton salir.png" id="7_i5dje"]
-[ext_resource type="Texture2D" uid="uid://dpenhhntcc5me" path="res://jugador_1/victoria/guardar.png" id="8_f8ngn"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_gvs5y"]
-font = ExtResource("2_xtg27")
-font_size = 80
+[ext_resource type="Texture2D" uid="uid://blow0fetigw8s" path="res://jugador_1/victoria/boton inicio.png" id="4_bl21q"]
+[ext_resource type="Texture2D" uid="uid://dfn5clqwwd0r4" path="res://jugador_1/menu/records_button.png" id="5_xqmsa"]
+[ext_resource type="Texture2D" uid="uid://dktitx4plwu14" path="res://jugador_1/menu/boton salir.png" id="7_i5dje"]
+[ext_resource type="Texture2D" uid="uid://ofmkqadj756j" path="res://jugador_1/victoria/guardar.png" id="8_f8ngn"]
+[ext_resource type="AudioStream" uid="uid://d1mgmok45vktm" path="res://music/audio fondo.mp3" id="9_xqmsa"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_qlbo7"]
 font = ExtResource("2_xtg27")
@@ -33,18 +30,8 @@ metadata/_edit_vertical_guides_ = [-404.0]
 layout_mode = 0
 offset_right = 1153.0
 offset_bottom = 648.0
-texture = ExtResource("1_qpjob")
+texture = ExtResource("2_pf8c1")
 expand_mode = 1
-
-[node name="Titulo" type="Label" parent="." unique_id=272341680]
-layout_mode = 0
-offset_left = 21.0
-offset_top = 10.0
-offset_right = 790.0
-offset_bottom = 261.0
-text = "CORRECTO:
-CASO RESUELTO"
-label_settings = SubResource("LabelSettings_gvs5y")
 
 [node name="LobbyButton" type="Control" parent="." unique_id=431586221]
 anchors_preset = 0
@@ -56,10 +43,10 @@ script = ExtResource("3_pad2k")
 
 [node name="Sprite2D" type="TextureRect" parent="LobbyButton" unique_id=419584606]
 layout_mode = 0
-offset_left = -8.999977
-offset_top = 9.0
-offset_right = 189.00003
-offset_bottom = 185.0
+offset_left = -3.9999695
+offset_top = 21.0
+offset_right = 194.00003
+offset_bottom = 197.0
 scale = Vector2(0.72727275, 0.7386364)
 texture = ExtResource("4_bl21q")
 
@@ -72,14 +59,15 @@ offset_bottom = 133.0
 
 [node name="Sprite2D" type="TextureRect" parent="SaveButton" unique_id=1198221548]
 layout_mode = 0
-offset_left = 827.0
-offset_top = 499.0
-offset_right = 970.0
-offset_bottom = 628.0
-texture = ExtResource("6_67kmo")
+offset_left = 461.0
+offset_top = 176.0
+offset_right = 702.0
+offset_bottom = 387.0
+texture = ExtResource("5_xqmsa")
 expand_mode = 1
 
 [node name="SavePanel" type="Control" parent="." unique_id=1592164194]
+visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -159,6 +147,11 @@ offset_right = 326.0
 offset_bottom = 108.0
 texture = ExtResource("8_f8ngn")
 expand_mode = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=694874562]
+stream = ExtResource("9_xqmsa")
+autoplay = true
+parameters/looping = true
 
 [connection signal="gui_input" from="SaveButton" to="." method="_on_save_button_gui_input"]
 [connection signal="gui_input" from="SavePanel/PanelBox/CloseButton" to="." method="_on_close_button_gui_input"]

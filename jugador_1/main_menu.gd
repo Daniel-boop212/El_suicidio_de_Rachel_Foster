@@ -571,3 +571,18 @@ func _on_button_personaje_4_pressed() -> void:
 	$MenuScreen/MultiplayerPanel/PanelBox/sel3.visible = false
 	$MenuScreen/MultiplayerPanel/PanelBox/sel4.visible = true
 	Global.personaje_actual = 4
+
+
+func _on_button_f_1_pressed() -> void:
+	Global.final_actual = "positivo"
+	get_tree().change_scene_to_file("res://finales.tscn")
+
+
+func _on_button_f_2_pressed() -> void:
+	Global.final_actual = "intermedio"
+	get_tree().change_scene_to_file("res://finales.tscn")
+
+
+func _on_button_f_3_pressed() -> void:
+	Global.final_actual = "malo"
+	get_tree().change_scene_to_file("res://finales.tscn")

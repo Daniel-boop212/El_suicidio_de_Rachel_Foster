@@ -3,12 +3,12 @@ extends CanvasLayer
 @onready var timer_label = $Label
 @onready var timer = $Timer
 
-# 15 minutos = 900 segundos
-var tiempo_restante := 900
-
-
 func _ready():
 	timer.wait_time = 1.0
+
+	if Global.tiempo_restante <= 0:
+		Global.tiempo_restante = 10
+
 	if not timer.timeout.is_connected(_on_timer_timeout):
 		timer.timeout.connect(_on_timer_timeout)
 
@@ -17,32 +17,30 @@ func _ready():
 
 
 func _on_timer_timeout():
-	tiempo_restante -= 1
+	Global.tiempo_restante -= 1
 
 	actualizar_texto()
 
-	if tiempo_restante <= 0:
+	if Global.tiempo_restante <= 0:
 		timer.stop()
 		timer_label.text = "00:00"
 		timer_label.modulate = Color.RED
-		print("Tiempo terminado")
+		# FINAL MALO
+		Global.final_actual = "malo"
+
+		await get_tree().create_timer(1.0).timeout
+		get_tree().change_scene_to_file("res://finales.tscn")
 
 
 func actualizar_texto():
-	var minutos = tiempo_restante / 60
-	var segundos = tiempo_restante % 60
+	var minutos = Global.tiempo_restante / 60
+	var segundos = Global.tiempo_restante % 60
 
 	timer_label.text = "%02d:%02d" % [minutos, segundos]
 
-	# Cambiar color según el tiempo
-	if tiempo_restante > 600:
-		# Más de 10 minutos
+	if Global.tiempo_restante > 600:
 		timer_label.modulate = Color.WHITE
-
-	elif tiempo_restante > 300:
-		# Entre 5 y 10 minutos
+	elif Global.tiempo_restante > 300:
 		timer_label.modulate = Color.YELLOW
-
 	else:
-		# Menos de 5 minutos
 		timer_label.modulate = Color.RED

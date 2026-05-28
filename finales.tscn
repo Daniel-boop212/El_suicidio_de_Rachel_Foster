@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://dmg2awtk025id"]
+
+[ext_resource type="Script" uid="uid://dkdtvnc5rnbb6" path="res://finales.gd" id="1_6ntuc"]
+[ext_resource type="FontFile" uid="uid://b0qxytofu2kgf" path="res://jugador_1/menu/varsity_regular.ttf" id="1_fgqy8"]
+[ext_resource type="AudioStream" uid="uid://6irnbjx4p3m8" path="res://music/escenas.mp3" id="3_wq1yr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6ntuc"]
+font = ExtResource("1_fgqy8")
+font_size = 30
+
+[node name="finales" type="Control" unique_id=820219409]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6ntuc")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1075277388]
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 650.0
+
+[node name="Panel" type="Panel" parent="." unique_id=563661714]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 550.0
+offset_right = 1150.0
+offset_bottom = 645.0
+
+[node name="Label" type="Label" parent="Panel" unique_id=1853433313]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 12.0
+offset_right = 1132.0
+offset_bottom = 85.0
+label_settings = SubResource("LabelSettings_6ntuc")
+
+[node name="Fade" type="ColorRect" parent="." unique_id=287439059]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0, 0, 0, 0)
+
+[node name="Timer" type="Timer" parent="." unique_id=403824283]
+wait_time = 0.052
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=287658500]
+stream = ExtResource("3_wq1yr")
+autoplay = true
+parameters/looping = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

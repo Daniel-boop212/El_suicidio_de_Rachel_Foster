@@ -20,12 +20,15 @@ var indicador_interaccion: Label
 var npc_id_actual: int = 0
 var dialogo_actual: Dictionary = {}
 var opciones_actuales: Array[Dictionary] = []
+var tarea_pendiente := ""
+var pista_pendiente := ""
 
 const TECLA_INTERACCION: Key = KEY_E
 const OPCION_PREGUNTAR: String = "Preguntar por la pista"
 const OPCION_DESPEDIRSE: String = "Despedirse"
 
 func _ready() -> void:
+	Global.tarea_jugador_2_completada.connect(_on_tarea_completada)
 	npc_id_actual = _resolver_npc_id()
 	area.body_entered.connect(_on_body_entered)
 	area.body_exited.connect(_on_body_exited)
@@ -208,7 +211,7 @@ func _responder_opcion(opcion: Dictionary) -> void:
 	var tarea: String = str(opcion.get("tarea", ""))
 	var extras: Array[String] = []
 
-	if not pista.is_empty():
+	if tarea.is_empty() and not pista.is_empty():
 		var pista_nueva: bool = Global.add_pista(pista)
 		if pista_nueva:
 			extras.append("Pista obtenida: " + pista)
@@ -220,7 +223,19 @@ func _responder_opcion(opcion: Dictionary) -> void:
 		extras.append("Usaste una pista clave para hablar con Rachel.")
 
 	if not tarea.is_empty():
+
+	# Evita duplicar solicitudes
+		if tarea_pendiente == tarea:
+			_mostrar_texto("El policía ya está investigando esta pista.")
+			return
+
+		tarea_pendiente = tarea
+		pista_pendiente = pista
+
 		_solicitar_tarea_unica(tarea)
+
+		_mostrar_texto("El policía está investigando esto...")
+		return
 
 	if opcion.has("desbloquea"):
 		extras.append(str(opcion["desbloquea"]))
@@ -233,17 +248,13 @@ func _responder_opcion(opcion: Dictionary) -> void:
 func _mostrar_final_rachel() -> void:
 	var pistas_usadas: int = Global.contar_pistas_finales_usadas()
 	var resultado: String = Global.finalizar_el_precipicio(pistas_usadas)
-	var texto_final: String = ""
+	mostrar_final.rpc(resultado)
 
-	if resultado == "positivo":
-		texto_final = "FINAL A - El paso atrás\n\nRachel da un paso atrás del borde. Cae de rodillas. El detective se acerca y se sienta a su lado.\n\nRachel recibió ayuda. Su historia continúa."
-	elif resultado == "intermedio":
-		texto_final = "FINAL B - La duda\n\nRachel no salta, pero tampoco retrocede. Se sienta en el borde.\n\nRachel fue llevada a recibir apoyo. El camino es largo, pero comenzó."
-	else:
-		texto_final = "FINAL C - Sin palabras\n\nNo tienes suficiente información para llegar a Rachel de verdad. Aun así, decides quedarte y aprender a escuchar.\n\nLlegar tarde no siempre significa llegar demasiado tarde, pero casi."
-
-	texto_final += "\n\nPistas clave usadas: %d" % pistas_usadas
-	_mostrar_texto(texto_final)
+@rpc("authority", "call_local", "reliable")
+func mostrar_final(resultado: String) -> void:
+	Global.final_actual = resultado
+	await get_tree().create_timer(1.0).timeout
+	get_tree().change_scene_to_file("res://finales.tscn")
 
 func _opcion_disponible(opcion: Dictionary) -> bool:
 	if opcion.has("requiere"):
@@ -323,3 +334,15 @@ func _actualizar_indicador() -> void:
 func _actualizar_textos() -> void:
 	if indicador_interaccion != null:
 		indicador_interaccion.text = Global.t("press_talk")
+		
+func _on_tarea_completada(task_id: String, resultado: bool, recompensa: int) -> void:
+	if task_id != tarea_pendiente:
+		return
+	if resultado:
+		if pista_pendiente != "":
+			Global.add_pista(pista_pendiente)
+		_mostrar_texto("El policía encontró nueva evidencia.")
+	else:
+		_mostrar_texto("El policía no logró completar la investigación.")
+	tarea_pendiente = ""
+	pista_pendiente = ""

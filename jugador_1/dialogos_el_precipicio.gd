@@ -141,7 +141,8 @@ const NPCS: Dictionary = {
 			{"texto": "¿Cómo era tu relación con Rachel?", "respuesta": "Éramos amigos. Pero yo sentía algo más. Y creo que ella también. Pero nunca lo dijimos.", "pista": "Alex tenía sentimientos por Rachel, nunca expresados"},
 			{"texto": "¿Sabías del acoso que sufría?", "respuesta": "Sí. Y lo peor es que una vez intenté defenderla y Rachel me pidió que no lo hiciera. Me dijo: No quiero que te lastimen por mí.", "pista": "Rachel protegía a otros antes que a sí misma"},
 			{"texto": "¿Hablaste con ella sobre cómo se sentía?", "respuesta": "Hace una semana me mandó un mensaje a las 3am: Alex, ¿crees que soy una carga para todos? Le respondí que no. Pero debí hacer más.", "pista": "Rachel se sentía como una carga"},
-			{"texto": "¿Qué le dirías si estuvieras aquí?", "respuesta": "Que la quiero. Que siempre la quise. Que el mundo es diferente con ella en él.", "pista": "Mensaje de Alex para Rachel"}
+			{"texto": "¿Qué le dirías si estuvieras aquí?", "respuesta": "Que la quiero. Que siempre la quise. Que el mundo es diferente con ella en él.", "pista": "Mensaje de Alex para Rachel"},
+			{"texto": "¿no recuerdas algo importante?", "respuesta": "recuerdo que dijo algo sobre el acantilado que esta abajo a la derecha", "pista": "acantilado abajo"}
 		]
 	},
 	14: {
