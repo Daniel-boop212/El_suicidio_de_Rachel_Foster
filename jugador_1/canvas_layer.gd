@@ -7,7 +7,7 @@ func _ready():
 	timer.wait_time = 1.0
 
 	if Global.tiempo_restante <= 0:
-		Global.tiempo_restante = 10
+		Global.tiempo_restante = 1200
 
 	if not timer.timeout.is_connected(_on_timer_timeout):
 		timer.timeout.connect(_on_timer_timeout)
